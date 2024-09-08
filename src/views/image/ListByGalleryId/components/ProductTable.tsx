@@ -98,6 +98,11 @@ const ActionColumn = ({ row }: { row: Image }) => {
         dispatch(setSelectedProduct(row.id))
     }
 
+    const onHideImage = () => {
+        dispatch(toggleDeleteConfirmation(true))
+        dispatch(setSelectedProduct(row.id))
+    }
+
 
     return (
         <div className="flex justify-end text-lg">

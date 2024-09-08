@@ -1,5 +1,6 @@
 import { TableQueries } from '@/@types/common'
 import ApiService from './ApiService'
+import appConfig from "@/configs/app.config";
 
 export async function apiGetSalesDashboardData<
     T extends Record<string, unknown>
@@ -24,8 +25,9 @@ async function formatParams(data:TableQueries) {
         } 
    });
 }
-
-export const URL = 'https://d10fm4zdopeh6z.cloudfront.net/api/v1/media'
+export const URL = `${appConfig.apiPrefix}/media`
+//export const URL = 'http://172.17.9.165:8000/media'
+//export const URL = 'https://d10fm4zdopeh6z.cloudfront.net/api/v1/media'
 //export const URL = 'https://api-stage.tomvisions.com/api/v1/media'
 export async function apiGetGalleries<T, U extends Record<string, unknown>>(
     data: TableQueries
