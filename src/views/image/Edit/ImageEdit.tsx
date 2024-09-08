@@ -17,7 +17,7 @@ import ImageForm, {
     FormModel,
     SetSubmitting,
     OnDeleteCallback,
-} from '@/views/Form'
+} from '@/views/image/Form'
 
 import isEmpty from 'lodash/isEmpty'
 
