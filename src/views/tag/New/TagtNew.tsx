@@ -1,7 +1,7 @@
 import TagForm, {
     FormModel,
     SetSubmitting,
-} from '@/views/Form'
+} from '@/views/tag/Form'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
