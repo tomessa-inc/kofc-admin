@@ -13,19 +13,19 @@ export async function apiGetSalesDashboardData<
 
 /**
  * Formating the params
- * @param data 
+ * @param data
  */
 async function formatParams(data:TableQueries) {
-    
+
     return [data.pageSize ?? 10, (data.sort?.key ? data.sort?.key : 'name'), (data.sort?.order ? data.sort?.order :'asc'), data.query].filter((param) => {
         console.log('the param');
         console.log(param);
         if (param) {
             return param;
-        } 
-   });
+        }
+    });
 }
-export const URL = `${appConfig.apiPrefix}/media`
+export const URL = `${appConfig.apiPrefix}/event`
 //export const URL = 'http://172.17.9.165:8000/media'
 //export const URL = 'https://d10fm4zdopeh6z.cloudfront.net/api/v1/media'
 //export const URL = 'https://api-stage.tomvisions.com/api/v1/media'
@@ -33,7 +33,7 @@ export async function apiGetGalleries<T, U extends Record<string, unknown>>(
     data: TableQueries
 ) {
     const params = await formatParams(data);
-   
+
     console.log(`${URL}/page-index/${data['pageIndex']}/page-size/${params.join('/')}`)
     return ApiService.fetchData<T>({
         url: `${URL}/page-index/${data['pageIndex']}/page-size/${params.join('/')}`,
@@ -42,26 +42,39 @@ export async function apiGetGalleries<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function   apiCreateTag<T, U extends Record<string, unknown>>(
+export async function apiCreateEvent<T, U extends Record<string, unknown>>(
     data: U
 ) {
-    console.log(`${URL}/tag/new`);
+    console.log(`${URL}/`);
     console.log(data);
     return ApiService.fetchData<T>({
-        url: `${URL}/tag/new`,
+        url: `${URL}/event`,
         method: 'post',
         data,
     })
 }
 
+export async function  apiGetEvents<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    console.log(`${URL}/event`);
+    console.log(data);
+    return ApiService.fetchData<T>({
+        url: `${URL}/event`,
+        method: 'get',
+        data,
+    })
+}
+
+
 export async function apiGetImagesByGalleryId<T, U extends Record<string, unknown>>(
     data: TableQueries
 ) {
-   const params = await formatParams(data); 
+    const params = await formatParams(data);
 //   mediaRouter.get("/id/:id/image/:pageIndex?/:pageSize?/:sort?/:order?", ImageController.apiGetAllImagesByGallery);
     console.log(`${URL}/id/${data.data.id}/image/${data.pageIndex}/${params.join('/')}`);
 
-   return ApiService.fetchData<T>({
+    return ApiService.fetchData<T>({
         url: `${URL}/id/${data.data.id}/image/${data.pageIndex}/${params.join('/')}`,
         method: 'get',
     })
@@ -73,9 +86,9 @@ export async function apiGetImagesByGalleryId<T, U extends Record<string, unknow
 export async function apiGetImages<T, U extends Record<string, unknown>>(
     data: TableQueries
 ) {
-   const params = await formatParams(data); 
+    const params = await formatParams(data);
     console.log(`${URL}/image/page-index/${data.pageIndex}/page-size/${params.join('/')}`)
-   return ApiService.fetchData<T>({
+    return ApiService.fetchData<T>({
         url: `${URL}/image/page-index/${data.pageIndex}/page-size/${params.join('/')}`,
         method: 'post',
     })
@@ -85,8 +98,8 @@ export async function apiGetTags<T, U extends Record<string, unknown>>(
     data: TableQueries
 ) {
 
- const params = await formatParams(data); 
-console.log(`${URL}/tag/page-index/${data.pageIndex}/page-size/${params.join('/')}`);
+    const params = await formatParams(data);
+    console.log(`${URL}/tag/page-index/${data.pageIndex}/page-size/${params.join('/')}`);
     return ApiService.fetchData<T>({
         url: `${URL}/tag/page-index/${data.pageIndex}/page-size/${params.join('/')}`,
         method: 'post',
@@ -98,8 +111,8 @@ export async function apiGetTagsList<T, U extends Record<string, unknown>>(
     data: TableQueries
 ) {
 
- const params = await formatParams(data); 
-console.log(`${URL}/tag/list`);
+    const params = await formatParams(data);
+    console.log(`${URL}/tag/list`);
     return ApiService.fetchData<T>({
         url: `${URL}/tag/list`,
         method: 'post',
@@ -154,11 +167,11 @@ export async function apiGetImageById<T, U extends Record<string, unknown>>(
 export async function apiPutGallery<T, U extends Record<string, unknown>>(
     data: U
 ) {
-   return ApiService.fetchData<T>({
+    return ApiService.fetchData<T>({
         url: `${URL}/id/${data['id']}`,
         method: 'put',
         data,
-    }) 
+    })
 }
 
 export async function apiPutImage<T, U extends Record<string, unknown>>(

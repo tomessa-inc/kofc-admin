@@ -4,8 +4,9 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
-    getImage,
-    updateImage,
+    getGallery,
+    getTagsList,
+    updateGallery,
     deleteProduct,
     useAppSelector,
     useAppDispatch,
@@ -13,35 +14,43 @@ import reducer, {
 import { injectReducer } from '@/store'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import ImageForm, {
+import GalleryForm, {
     FormModel,
     SetSubmitting,
     OnDeleteCallback,
-} from '@/views/image/Form'
+} from '@/views/gallery/Form'
 
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('ImageEdit', reducer)
+injectReducer('Edit', reducer)
 
-const ImageEdit = () => {
+const Edit = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.ImageEdit.data.tableData
+        (state) => state.GalleryEdit.data.tableData
     )
 
     const location = useLocation()
     const navigate = useNavigate()
 
-    const imageData = useAppSelector(
-        (state) => state.ImageEdit.data.imageData
+    const galleryData = useAppSelector(
+        (state) => state.GalleryEdit.data.galleryData
+    )
+
+    const tagList = useAppSelector(
+        (state) => state.GalleryEdit.data.tagList
     )
     const loading = useAppSelector(
-        (state) => state.ImageEdit.data.loading
+        (state) => state.GalleryEdit.data.loading
     )
 
     const fetchData = (data: { id: string }) => {
-        dispatch(getImage(data))
+        dispatch(getGallery(data))
+    }
+
+    const fetchDataTag = () => {
+        dispatch(getTagsList({ pageIndex, pageSize, sort, query}))
     }
 
     const handleFormSubmit = async (
@@ -49,12 +58,12 @@ const ImageEdit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
-        const success = await updateImage(values)
+        const success = await updateGallery(values)
         setSubmitting(false)
         if (success) {
             popNotification('updated')
         }
-        navigate('/image')
+        navigate('/gallery')
     }
 
     const handleDiscard = () => {
@@ -63,7 +72,7 @@ const ImageEdit = () => {
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
-        const success = await deleteProduct({ id: imageData.id })
+        const success = await deleteProduct({ id: galleryData.id })
         if (success) {
             popNotification('deleted')
         }
@@ -94,14 +103,23 @@ const ImageEdit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
+    useEffect(() => {
+        fetchDataTag()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageIndex, pageSize, sort])
+
+    console.log('gallery')
+    console.log(galleryData);
+
     return (
         <>
             <Loading loading={loading}>
-                {!isEmpty(imageData) && (
+                {!isEmpty(galleryData) && (
                     <>
-                        <ImageForm
+                        <GalleryForm
                             type="edit"
-                            initialData={imageData}
+                            initialData={galleryData}
+                            tagList={tagList}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                             onDelete={handleDelete}
@@ -109,7 +127,7 @@ const ImageEdit = () => {
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(imageData) && (
+            {!loading && isEmpty(galleryData) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"
@@ -123,4 +141,4 @@ const ImageEdit = () => {
     )
 }
 
-export default ImageEdit
+export default Edit

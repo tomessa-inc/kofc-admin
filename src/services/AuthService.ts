@@ -7,9 +7,13 @@ import type {
     SignInResponse,
     SignUpResponse,
 } from '@/@types/auth'
-
-export const URL = 'http://127.0.0.1:9000/api/v1/user'
+import appConfig from "@/configs/app.config";
+//export const URL = 'https://d10fm4zdopeh6z.cloudfront.net/api/v1/user'
+export const URL = `${appConfig.apiPrefix}/auth`
+//export const URL = 'http://127.0.0.1:9000/api/v1/user'
 export async function apiSignIn(data: SignInCredential) {
+    console.log(`${URL}/sign-in`)
+    console.log(data);
     return ApiService.fetchData<SignInResponse>({
         url: `${URL}/sign-in`,
         method: 'post',

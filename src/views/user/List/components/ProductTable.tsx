@@ -2,11 +2,10 @@ import { useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
-import {HiCamera, HiOutlinePencil, HiOutlineTrash} from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getImages,
-    getImagesByGalleryId,
+    getGalleries,
     setTableData,
     setSelectedProduct,
     toggleDeleteConfirmation,
@@ -22,13 +21,13 @@ import type {
     OnSortParam,
     ColumnDef,
 } from '@/components/shared/DataTable'
-import {Buffer} from 'buffer';
 
 type Product = {
     id: string
     name: string
     productCode: string
     img: string
+    category: string
     price: number
     stock: number
     status: number
@@ -38,21 +37,12 @@ type Gallery = {
     id: string
     name: string
     img: string
-    description: string;
+    description: string
+    tag: string
     createdAt: string
     updatedAt: string
 }
 
-type Image = {
-    id: string
-    key: string
-    GalleryId: string
-    primaryImage: number
-    name: string;
-    createdAt: string
-    updatedAt: string
-    orientation: number
-}
 
 const inventoryStatusColor: Record<
     number,
@@ -80,24 +70,19 @@ const inventoryStatusColor: Record<
 }
 
 
-const ActionColumn = ({ row }: { row: Image }) => {
+const ActionColumn = ({ row }: { row: Gallery }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/image/edit/${row.id}`)
+        navigate(`/gallery/edit/${row.id}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
         dispatch(setSelectedProduct(row.id))
     }
-    const onDeleteSoft = () => {
-        dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedProduct(row.id))
-    }
-
 
     return (
         <div className="flex justify-end text-lg">
@@ -112,12 +97,6 @@ const ActionColumn = ({ row }: { row: Image }) => {
                 onClick={onDelete}
             >
                 <HiOutlineTrash />
-            </span>
-            <span
-                className="cursor-pointer p-2 hover:text-red-300"
-                onClick={onDeleteSoft}
-            >
-                <HiCamera />
             </span>
         </div>
     )
@@ -151,47 +130,29 @@ const GalleryColumn = ({ row }: { row: Gallery }) => {
     )
 }
 
-const ImageColumn = ({ row }: { row: Image }) => {
-    const avatar = (
-        <Avatar icon={<FiPackage />} />
-    )
-
-    return (
-        <div className="flex items-center">
-            {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name}</span>
-        </div>
-    )
-}
-
 const ProductTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.imagesList.data.tableData
+        (state) => state.galleryList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.imagesList.data.filterData
+        (state) => state.galleryList.data.filterData
     )
 
     const loading = useAppSelector(
-        (state) => state.imagesList.data.loading
+        (state) => state.galleryList.data.loading
     )
 
     const data = useAppSelector(
-        (state) => state.imagesList.data.imagesList
+        (state) => state.galleryList.data.galleryList
     )
 
-    
-    useEffect(() => {  
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1
-        )
-        const requestParam = { id: path }
-        fetchData(requestParam)
+    useEffect(() => {
+        fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageIndex, pageSize, sort])
 
@@ -206,75 +167,44 @@ const ProductTable = () => {
         [pageIndex, pageSize, sort, query, total]
     )
 
-    const fetchData = (data: { id: string }) => {
-        dispatch(getImagesByGalleryId({data, pageIndex, pageSize, sort, query,  filterData}))
+    const fetchData = () => {
+        dispatch(getGalleries({ pageIndex, pageSize, sort, query, filterData }))
     }
-//    dispatch(getImages({ pageIndex, pageSize, sort, query,  filterData  }))
     
-    const imageRequest = (key:any, edits:any) => {
 
-        const config = JSON.stringify({
-        bucket: "images.kofc9544.ca",
-        key: key,
-        edits: edits
-    })
-
-    return `${Buffer.from(config).toString('base64')}`;
-    }
-
-    const formatImage = (key:any) => {          
-                const signatureSmall = imageRequest(key, {
-                    "resize": {
-                        "width": 200,
-                        "height": 200,
-                        "fit": "inside"
-                    }
-                });
-    
-                return `https://images.tc-testing-check.net/${signatureSmall}`;
-        
-        }
-
-    const columns: ColumnDef<Image>[] = useMemo(
+    const columns: ColumnDef<Gallery>[] = useMemo(
         () => [
+            {
+                header: 'ID',
+                accessorKey: 'id',
+                cell: (props) => {
+                    const row = props.row.original
+                    const link = '/image/';
+                    return <a href={link + row.id}>{row.id}</a>
+                },
+            },
             {
                 header: 'Name',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <ImageColumn row={row} />
+                    return <GalleryColumn row={row} />
                 },
             },
             {
-                header: 'Gallery',
-                accessorKey: 'GalleryId',
+                header: 'Description',
+                accessorKey: 'description',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.GalleryId}</span>
+                    return <span className="capitalize">{row.description}</span>
                 },
             },
             {
-                header: 'Key',
-                accessorKey: 'key',
+                header: 'Tag',
+                accessorKey: 'tag',
                 cell: (props) => {
                     const row = props.row.original
-                    return <img src={formatImage(row.key)} />
-                },
-            },
-            {
-                header: 'Primary Image',
-                accessorKey: 'primaryImage',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.primaryImage}</span>
-                },
-            },
-            {
-                header: 'Orientation',
-                accessorKey: 'orientation',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.orientation}</span>
+                    return <span className="capitalize">{row.tag}</span>
                 },
             },
             {

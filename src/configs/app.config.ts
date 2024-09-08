@@ -7,8 +7,9 @@ export type AppConfig = {
     enableMock: boolean
 }
 
-const appConfig: AppConfig = {
-    apiPrefix: 'http://127.0.0.1:9000/api',
+export const appConfig: AppConfig = {
+//s    apiPrefix: `${process.env.REACT_APP_BASE_URL}/api`,
+    apiPrefix: 'http://localhost:8000',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',

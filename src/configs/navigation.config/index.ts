@@ -19,7 +19,7 @@ const navigationConfig: NavigationTree[] = [
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',
-        path: '/single-menu-view',
+        path: '/single-menu-View',
         title: 'Single menu item',
         translateKey: 'nav.singleMenuItem',
         icon: 'singleMenu',
@@ -68,7 +68,7 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [
             {
                 key: 'collapseMenu.item1',
-                path: '/collapse-menu-item-view-1',
+                path: '/collapse-menu-item-View-1',
                 title: 'Collapse menu item 1',
                 translateKey: 'nav.collapseMenu.item1',
                 icon: '',
@@ -78,7 +78,7 @@ const navigationConfig: NavigationTree[] = [
             },
             {
                 key: 'collapseMenu.item2',
-                path: '/collapse-menu-item-view-2',
+                path: '/collapse-menu-item-View-2',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item2',
                 icon: '',
@@ -99,7 +99,7 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [
             {
                 key: 'groupMenu.single',
-                path: '/group-single-menu-item-view',
+                path: '/group-single-menu-item-View',
                 title: 'Group single menu item',
                 translateKey: 'nav.groupMenu.single',
                 icon: 'groupSingleMenu',
@@ -118,7 +118,7 @@ const navigationConfig: NavigationTree[] = [
                 subMenu: [
                     {
                         key: 'groupMenu.collapse.item1',
-                        path: '/group-collapse-menu-item-view-1',
+                        path: '/group-collapse-menu-item-View-1',
                         title: 'Menu item 1',
                         translateKey: 'nav.groupMenu.collapse.item1',
                         icon: '',
@@ -128,7 +128,7 @@ const navigationConfig: NavigationTree[] = [
                     },
                     {
                         key: 'groupMenu.collapse.item2',
-                        path: '/group-collapse-menu-item-view-2',
+                        path: '/group-collapse-menu-item-View-2',
                         title: 'Menu item 2',
                         translateKey: 'nav.groupMenu.collapse.item2',
                         icon: '',

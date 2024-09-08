@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import {HiCamera, HiOutlinePencil, HiOutlineTrash} from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
     getImages,
@@ -104,29 +104,35 @@ const ActionColumn = ({ row }: { row: Image }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                <HiOutlinePencil />
+                <HiOutlinePencil/>
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-500"
                 onClick={onDelete}
             >
-                <HiOutlineTrash />
+                <HiOutlineTrash/>
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-300"
                 onClick={onDeleteSoft}
             >
-                <HiOutlineTrash />
+                <HiCamera/>
+            </span>
+            <span
+                className="cursor-pointer p-2 hover:text-red-300"
+                onClick={onDeleteSoft}
+            >
+                <HiCamera/>
             </span>
         </div>
     )
 }
 
-const ProductColumn = ({ row }: { row: Product }) => {
+const ProductColumn = ({row}: { row: Product }) => {
     const avatar = row.img ? (
-        <Avatar src={row.img} />
+        <Avatar src={row.img}/>
     ) : (
-        <Avatar icon={<FiPackage />} />
+        <Avatar icon={<FiPackage/>}/>
     )
 
     return (
