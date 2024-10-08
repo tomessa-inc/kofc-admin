@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useMemo, useRef, useState} from 'react';
 import {DayPilot, DayPilotMonth, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
-import {DayPilotMonthWithData} from "./components/DayPilotMonth"
 import {createEvent, createEvent2, getEvents, useAppDispatch, useAppSelector} from "@/views/calender/View/store";
 import {injectReducer} from "@/store";
 import reducer from "@/views/calender/View/store";
@@ -8,45 +7,50 @@ import type {DataTableResetHandle} from "@/components/shared";
 import {getImagesByGalleryId} from "@/views/image/ListImageByGallery/store"
 import {getEventMonthByDay} from "@/views/calender/View/store";
 import {date} from "yup";
-import {Event} from  "./components/DayPilotMonth"
+import {FormikErrors, FormikTouched} from "formik";
+import "./DayPilotMonth.css"
+
+export type Event = {
+    "id": string,
+    "text": string,
+    "start": DayPilot.Date,
+    "end": DayPilot.Date
+}
+
 
 
 injectReducer('events', reducer)
 
-export const Month = () => {
+type MonthFieldProps = {
+    events: Event[]
+    startDate?: any
+
+}
+
+
+export const DayPilotMonthWithData = (props: MonthFieldProps) => {
+    const { events, startDate } = props
+
+
     const [state, setState] = useState({
         startDate: DayPilot.Date.today(),
     });
     const calenderRef : React.RefObject<any> = React.createRef();
     const tableRef = useRef<DataTableResetHandle>(null)
 
-    const dispatch = useAppDispatch()
-    let eventList: any[] = []
-/*
-    const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.events.data.data
-    )
+//
+//
+//    const dispatch = useAppDispatch()
 
- */
+    /*
+        const { pageIndex, pageSize, sort, query, total } = useAppSelector(
+            (state) => state.events.data.data
+        )
+
+     */
     const data = useAppSelector(
-        (state) => state.events.data.data
+        (state) => state.events.data
     )
-
-    let dataArray: Event[] = [];
-
-    if (Array.isArray(data)) {
-
-        dataArray = data.map((the: any) => {
-            const jsonObject = {
-                id: the.id,
-                text: the.text,
-                start: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourStart),
-                end: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourEnd),
-            }
-
-            return jsonObject;
-        })
-    }
 
     /*
         const filterData = useAppSelector(
@@ -58,8 +62,8 @@ export const Month = () => {
     )
 
 //    const data = useAppSelector(
-  //      (state) => state.events.data.eventList
-   // )
+    //      (state) => state.events.data.eventList
+    // )
 
     const options = [
         { name: "None", id: "none" },
@@ -69,30 +73,27 @@ export const Month = () => {
     ];
 
 
-    useEffect(() => {
-        fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
-/*
-    const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }),
-        [pageIndex, pageSize, sort, query, total]
-    )
-*/
-    const fetchData = () => {
+    /*
+        const tableData = useMemo(
+            () => ({ pageIndex, pageSize, sort, query, total }),
+            [pageIndex, pageSize, sort, query, total]
+        )
+    */
+ /*   const fetchData = () => {
         const date = new Date();
-        dispatch(getEventMonthByDay({data: {month: date.getMonth()+1, year: date.getFullYear()}}))
-    }
+
+        dispatch(getEventMonthByDay({data: {month: date.getMonth(), year: date.getFullYear()}}))
+    } */
 
     const onTimeRangeSelected = async (args: any) => {
-
+        console.log('on time selecte')
         const form = [
             {name: "Event", id: "text"},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
-            {name: "Frequency", id: "frequency", type: "text"},
+            {name: "Frequency", id: "frequency", type: "text", value:"0"},
         ];
 
 
@@ -105,7 +106,8 @@ export const Month = () => {
         //   console.log(args);
 
         const modal = await DayPilot.Modal.form(form, data);
-
+        console.log("modal")
+        console.log(modal);
 
 //        const modal = await DayPilot.Modal.form(form);
 
@@ -134,6 +136,7 @@ export const Month = () => {
             id: DayPilot.guid(),
             text: modal.result.text,
         }));
+
         console.log({
             data: {
                 start: args.start.value,
@@ -145,6 +148,7 @@ export const Month = () => {
 
             }
         });
+        console.log('about to go to create Event')
         let newVar = await createEvent({
             data: {
                 start: args.start.value,
@@ -152,7 +156,7 @@ export const Month = () => {
                 id: DayPilot.guid(),
                 text: modal.result.text,
                 recurring: modal.result.recurring ?? "none",
-                frequency: modal.result.frequency ?? 1
+                frequency: modal.result.frequency ?? "0"
             }
         });
 
@@ -161,13 +165,22 @@ export const Month = () => {
 
     }
 
+
     const updateCalender = () => {
 
         return calenderRef.current.control
     }
 
+    useEffect(() => {
+        updateCalender().update({events})
+        //     fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [events])
 
-    const componentDidMount = () => {
+
+
+
+    /*const componentDidMount = () => {
         const events = [
             {
                 id: 1,
@@ -227,30 +240,30 @@ export const Month = () => {
             },
         ];
         updateCalender().update(events)
-     //   loadEvents();
-    }
+        //   loadEvents();
+    } */
 
     const onEventClick  = async (args:any) => {
 
-         const form = [
-             {name: "Event", id: "text"},
-             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
-             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
-             {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
+        const form = [
+            {name: "Event", id: "text"},
+            {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
+            {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
+            {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
 
-         ];
+        ];
 
-         const eventData = args.e.data;
+        const eventData = args.e.data;
 
-         const modal = await DayPilot.Modal.form(form, eventData);
+        const modal = await DayPilot.Modal.form(form, eventData);
 
-         if (modal.canceled) {
-             return;
-         }
+        if (modal.canceled) {
+            return;
+        }
 
-         const dp = args.control;
+        const dp = args.control;
 
-         dp.events.update(modal.result);
+        dp.events.update(modal.result);
 
 
 
@@ -260,11 +273,11 @@ export const Month = () => {
 
 //           if (!calendar) return; // Ensure calender is set
 
-/*        const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
-        if (!modal.result) { return; }
-        const e = args.e;
-        e.data.text = modal.result;
-        this.calendar.events.update(e); */
+        /*        const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
+                if (!modal.result) { return; }
+                const e = args.e;
+                e.data.text = modal.result;
+                this.calendar.events.update(e); */
     };
 
     const loadEvents = async ()  => {
@@ -278,33 +291,19 @@ export const Month = () => {
     }
 
 
-
     return (
         <>
             <div>
-                <DayPilotNavigator
-                    selectMode={"Month"}
-                    showMonths={6}
-                    skipMonths={3}
-                    orientation={"Horizontal"}
-
-                    onTimeRangeSelected={args => {
-                        setState({
-                            startDate: args.day
-                        });
-                        dispatch(getEventMonthByDay({data: {month:args.day.getMonth()+1, year: args.day.getYear()}}))
-                    }}
-                />
-            </div>
-            <div>
-                <DayPilotMonthWithData
-                    {...state}
-                    events = {dataArray}
-
+                <DayPilotMonth
+                    startDate={startDate}
+                    onEventClick= {onEventClick}
+                    onTimeRangeSelected={onTimeRangeSelected}
+                    //onEventClick={onEventClick}
+                    ref={calenderRef}
                 />
             </div>
         </>
     )
 }
 
-export default Month;
+export default DayPilotMonthWithData;

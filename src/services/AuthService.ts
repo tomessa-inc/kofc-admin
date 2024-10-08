@@ -9,7 +9,7 @@ import type {
 } from '@/@types/auth'
 import appConfig from "@/configs/app.config";
 //export const URL = 'https://d10fm4zdopeh6z.cloudfront.net/api/v1/user'
-export const URL = `${appConfig.apiPrefix}/auth`
+export const URL = `${appConfig.apiPrefix}/user`
 //export const URL = 'http://127.0.0.1:9000/api/v1/user'
 export async function apiSignIn(data: SignInCredential) {
     console.log(`${URL}/sign-in`)
