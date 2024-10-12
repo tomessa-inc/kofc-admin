@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { APP_NAME } from '@/constants/app.constant'
 import type { CommonProps } from '@/@types/common'
+import {formatImage, formatImage100x100} from "@/services/ImageService";
 
 interface LogoProps extends CommonProps {
     type?: 'full' | 'streamline'
@@ -31,7 +32,7 @@ const Logo = (props: LogoProps) => {
         >
             <img
                 className={imgClass}
-                src={`${LOGO_SRC_PATH}logo-${mode}-${type}.png`}
+                src={formatImage100x100('site/kofc-logo100x100.png')}
                 alt={`${APP_NAME} logo`}
             />
         </div>
