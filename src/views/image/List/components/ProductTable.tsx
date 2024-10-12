@@ -21,7 +21,8 @@ import type {
     OnSortParam,
     ColumnDef,
 } from '@/components/shared/DataTable'
-import {Buffer} from 'buffer';
+import {formatImage} from "@/services/ImageService";
+
 
 type Product = {
     id: string
@@ -210,30 +211,6 @@ const ProductTable = () => {
     const fetchData = () => {
         dispatch(getImages({ pageIndex, pageSize, sort, query,  filterData  }))
     }
-
-    const imageRequest = (key:any, edits:any) => {
-
-        const config = JSON.stringify({
-        bucket: "images-kofc-golf",
-        key: key,
-        edits: edits
-    })
-
-    return `${Buffer.from(config).toString('base64')}`;
-    }
-
-    const formatImage = (key:any) => {          
-                const signatureSmall = imageRequest(key, {
-                    "resize": {
-                        "width": 200,
-                        "height": 200,
-                        "fit": "inside"
-                    }
-                });
-    
-                return `https://images.kofc9544-charitytournament.golf/${signatureSmall}`;
-        
-        }
 
     const columns: ColumnDef<Image>[] = useMemo(
         () => [

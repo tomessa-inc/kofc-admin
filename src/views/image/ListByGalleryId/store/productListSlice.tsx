@@ -164,7 +164,7 @@ const productListSlice = createSlice({
             state.selectedProduct = action.payload
         },
     },
-    extraReducers: (builder1) => {
+    extraReducers: (builder) => {
         builder
             .addCase(getImagesByGalleryId.fulfilled, (state, action) => {
                 state.imagesList = action.payload.data

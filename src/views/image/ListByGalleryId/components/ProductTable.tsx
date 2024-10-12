@@ -22,7 +22,7 @@ import type {
     OnSortParam,
     ColumnDef,
 } from '@/components/shared/DataTable'
-import {Buffer} from 'buffer';
+import {formatImage} from "@/services/ImageService";
 
 type Product = {
     id: string
@@ -215,30 +215,7 @@ const ProductTable = () => {
         dispatch(getImagesByGalleryId({data, pageIndex, pageSize, sort, query,  filterData}))
     }
 //    dispatch(getImages({ pageIndex, pageSize, sort, query,  filterData  }))
-    
-    const imageRequest = (key:any, edits:any) => {
 
-        const config = JSON.stringify({
-        bucket: "images.kofc9544.ca",
-        key: key,
-        edits: edits
-    })
-
-    return `${Buffer.from(config).toString('base64')}`;
-    }
-
-    const formatImage = (key:any) => {          
-                const signatureSmall = imageRequest(key, {
-                    "resize": {
-                        "width": 200,
-                        "height": 200,
-                        "fit": "inside"
-                    }
-                });
-    
-                return `https://images.tc-testing-check.net/${signatureSmall}`;
-        
-        }
 
     const columns: ColumnDef<Image>[] = useMemo(
         () => [

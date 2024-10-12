@@ -46,7 +46,7 @@ const navigationConfig: NavigationTree[] = [
                 subMenu: [],
             },
             {
-                key: 'collapseMenu.item2',
+                key: 'collapseMenu.item3',
                 path: '/tag',
                 title: 'Tags',
                 translateKey: 'Tags',
