@@ -31,7 +31,7 @@ export async function apiSignUp(data: SignUpCredential) {
 
 export async function apiSignOut() {
     return ApiService.fetchData({
-        url: `${URL}//sign-out`,
+        url: `${URL}/sign-out`,
         method: 'post',
     })
 }
