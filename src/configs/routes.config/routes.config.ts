@@ -12,6 +12,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'signOut',
+        path: `/sign-out`,
+        component: lazy(() => import('@/views/auth/SignOut')),
+        authority: [],
+    },
+    {
         key: 'gallerList',
         path: '/gallery',
         component: lazy(() => import('@/views/gallery/List')),

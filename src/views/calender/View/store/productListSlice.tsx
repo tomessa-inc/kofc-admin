@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiCreateEvent,
-    apiGetEventMonthByDay, apiGetEvents,
+    apiGetEventMonthByDay, apiGetEvents, apiPublishEvents,
 } from '@/services/CalenderService'
 import type { TableQueries } from '@/@types/common'
 import {apiPutGallery} from "@/services/MediaService";
@@ -86,6 +86,20 @@ export const createEvent2 = createAsyncThunk(
         console.log('at create event2')
     }
 )
+
+export const publishEvents = createAsyncThunk(
+    `${SLICE_NAME}/events/publish`,
+    async (data: GetSalesProductsRequest) => {
+
+        let response = await apiPublishEvents<
+            GetSalesProductsResponse,
+            GetSalesProductsRequest
+        >(data)
+
+        return response.data
+    }
+)
+
 
 export const getEventMonthByDay = createAsyncThunk(
     `${SLICE_NAME}/events/get`,

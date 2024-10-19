@@ -80,3 +80,17 @@ export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown
 
     return retval
 }
+
+
+export async function  apiPublishEvents<T, U extends Record<string, unknown>>(
+    data: U
+) {
+
+    const retval =  ApiService.fetchData<T>({
+        url: `${URL}/publish`,
+        method: 'post',
+        data,
+    })
+
+    return retval
+}

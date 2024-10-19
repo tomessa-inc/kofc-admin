@@ -4,7 +4,6 @@ import {createEvent, createEvent2, getEvents, useAppDispatch, useAppSelector} fr
 import {injectReducer} from "@/store";
 import reducer from "@/views/calender/View/store";
 import type {DataTableResetHandle} from "@/components/shared";
-import {getImagesByGalleryId} from "@/views/image/ListImageByGallery/store"
 import {getEventMonthByDay} from "@/views/calender/View/store";
 import {date} from "yup";
 import {FormikErrors, FormikTouched} from "formik";

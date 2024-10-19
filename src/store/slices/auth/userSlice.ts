@@ -3,6 +3,7 @@ import { SLICE_BASE_NAME } from './constants'
 
 export type UserState = {
     avatar?: string
+    name?: string
     userName?: string
     email?: string
     authority?: string[]

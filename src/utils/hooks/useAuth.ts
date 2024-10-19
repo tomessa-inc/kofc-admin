@@ -11,6 +11,7 @@ import { REDIRECT_URL_KEY } from '@/constants/app.constant'
 import { useNavigate } from 'react-router-dom'
 import useQuery from './useQuery'
 import type { SignInCredential, SignUpCredential } from '@/@types/auth'
+import Cookies from 'universal-cookie';
 
 type Status = 'success' | 'failed'
 
@@ -52,10 +53,17 @@ function useAuth() {
                         )
                     )
                 }
+
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
+
+                const cookies = new Cookies();
+                cookies.set('userInfo', JSON.stringify(resp.data.user), { path: '/' });
+
+
                 navigate(
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
                 )
+
                 return {
                     status: 'success',
                     message: '',
