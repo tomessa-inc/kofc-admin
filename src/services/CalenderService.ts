@@ -83,13 +83,13 @@ export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown
 
 
 export async function  apiPublishEvents<T, U extends Record<string, unknown>>(
-    data: U
-) {
 
+) {
+    console.log('about to push public')
+    console.log(`${URL}/publish`)
     const retval =  ApiService.fetchData<T>({
         url: `${URL}/publish`,
         method: 'post',
-        data,
     })
 
     return retval

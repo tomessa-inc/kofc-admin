@@ -87,19 +87,14 @@ export const createEvent2 = createAsyncThunk(
     }
 )
 
-export const publishEvents = createAsyncThunk(
-    `${SLICE_NAME}/events/publish`,
-    async (data: GetSalesProductsRequest) => {
 
-        let response = await apiPublishEvents<
-            GetSalesProductsResponse,
-            GetSalesProductsRequest
-        >(data)
+export const publishEvents = async <T, U extends Record<string, unknown>>(
+) => {
 
-        return response.data
-    }
-)
+    const response = await apiPublishEvents<T, U>()
 
+    return response.data
+}
 
 export const getEventMonthByDay = createAsyncThunk(
     `${SLICE_NAME}/events/get`,

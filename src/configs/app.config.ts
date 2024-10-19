@@ -11,7 +11,7 @@ export type AppConfig = {
 export const appConfig: AppConfig = {
 //s    apiPrefix: `${process.env.REACT_APP_BASE_URL}/api`,
 //    apiPrefix: 'http://localhost:9000',
-    apiPrefix: 'https://localhost:9000',
+    apiPrefix: 'http://localhost:9000',
     webPrefix: 'http://localhost:4200',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
