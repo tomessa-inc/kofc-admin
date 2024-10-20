@@ -53,7 +53,7 @@ export async function apiCreateEvent<T, U extends Record<string, unknown>>(
         method: 'post',
         data,
         headers: {
-           'Cache-Control':"max-age=31536000"
+           "Cache-Control":"max-age=31536000"
         },
     })
 }
@@ -69,7 +69,7 @@ export async function  apiGetEvents<T, U extends Record<string, unknown>>(
         method: 'post',
         data,
         headers: {
-            'Cache-Control':"max-age=31536000"
+            "Cache-Control":"max-age=31536000"
         },
     })
 }
@@ -83,7 +83,7 @@ export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown
         method: 'post',
         data,
         headers: {
-            'Cache-Control':"max-age=31536000"
+            "Cache-Control":"max-age=31536000"
         },
     })
 
