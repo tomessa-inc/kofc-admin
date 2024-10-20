@@ -52,6 +52,9 @@ export async function apiCreateEvent<T, U extends Record<string, unknown>>(
         url: `${URL}/`,
         method: 'post',
         data,
+        headers: {
+           'Cache-Control':"max-age=31536000"
+        },
     })
 }
 
@@ -65,6 +68,9 @@ export async function  apiGetEvents<T, U extends Record<string, unknown>>(
         url: `${URL}/event/month`,
         method: 'post',
         data,
+        headers: {
+            'Cache-Control':"max-age=31536000"
+        },
     })
 }
 
@@ -76,6 +82,9 @@ export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown
         url: `${URL}/month`,
         method: 'post',
         data,
+        headers: {
+            'Cache-Control':"max-age=31536000"
+        },
     })
 
     return retval
