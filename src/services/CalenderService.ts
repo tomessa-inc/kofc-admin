@@ -65,8 +65,8 @@ export async function  apiGetEvents<T, U extends Record<string, unknown>>(
     console.log(data);
 
     return ApiService.fetchData<T>({
-        url: `${URL}/event/month`,
-        method: 'post',
+        url: `${URL}/month`,
+        method: 'get',
         data,
         headers: {
             "Cache-Control":"max-age=31536000"
@@ -80,7 +80,7 @@ export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown
 
     const retval =  ApiService.fetchData<T>({
         url: `${URL}/month`,
-        method: 'post',
+        method: 'get',
         data,
         headers: {
             "Cache-Control":"max-age=31536000"
