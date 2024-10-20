@@ -4,6 +4,7 @@ import {
     NAV_ITEM_TYPE_COLLAPSE
 } from '@/constants/navigation.constant'
 import type { NavigationTree } from '@/@types/navigation'
+import {appConfig} from "../../configs/app.config"
 
 const navigationConfig: NavigationTree[] = [
     {
@@ -70,7 +71,7 @@ const navigationConfig: NavigationTree[] = [
     },
     {
         key: 'website',
-        path: 'http://localhost:4200',
+        path: appConfig.webPrefix,
         title: 'Website',
         translateKey: 'nav.website',
         icon: 'singleMenu',
