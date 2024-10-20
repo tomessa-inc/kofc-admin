@@ -57,7 +57,7 @@ function useAuth() {
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
 
                 const cookies = new Cookies();
-                cookies.set('userInfo', JSON.stringify(resp.data.user), { path: '/', domain: "https://tc-testing-check.net", sameSite: 'lax' });
+                cookies.set('userInfo', JSON.stringify(resp.data.user), { path: '/', domain: "tc-testing-check.net", sameSite: 'lax' });
 
 
                 navigate(
