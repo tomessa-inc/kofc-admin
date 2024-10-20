@@ -10,7 +10,7 @@ export type AppConfig = {
 
 export const appConfig: AppConfig = {
     apiPrefix: 'https://api-stage.tc-testing-check.net',
-    webPrefix: 'http://www.tc-testing-check.net',
+    webPrefix: 'https://www.tc-testing-check.net',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
