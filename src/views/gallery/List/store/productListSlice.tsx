@@ -61,6 +61,7 @@ export const getGalleries = createAsyncThunk(
             GetSalesProductsRequest
         >(data)
 
+        console.log(response.data);
         return response.data
     }
 )

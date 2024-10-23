@@ -22,7 +22,7 @@ import GalleryForm, {
 
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('Edit', reducer)
+injectReducer('GalleryEdit', reducer)
 
 const Edit = () => {
     const dispatch = useAppDispatch()
@@ -37,6 +37,9 @@ const Edit = () => {
     const galleryData = useAppSelector(
         (state) => state.GalleryEdit.data.galleryData
     )
+
+    console.log("here to go")
+    console.log(galleryData)
 
     const tagList = useAppSelector(
         (state) => state.GalleryEdit.data.tagList

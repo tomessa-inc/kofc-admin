@@ -38,11 +38,13 @@ type Gallery = {
     name: string
     img: string
     description: string
-    tag: string
+    Tags: Tag[]
     createdAt: string
     updatedAt: string
 }
-
+type Tag = {
+    name: string
+}
 
 const inventoryStatusColor: Record<
     number,
@@ -67,6 +69,24 @@ const inventoryStatusColor: Record<
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
+}
+
+const TagColumn =  ({ row }: { row: Gallery }) => {
+    let tagArray: string[] = []
+    row.Tags.map((tag) => {
+        tagArray.push(tag.name);
+    });
+    /*   for (let x=0;x<=row.Tags.length;x++) {
+        const tag: Tag = row.Tags[x]
+
+        tagArray.push(tag.name)
+        //    console.log(tagArray)
+    }*/
+        //console.log(tagArray)
+    //  console.log(tagArray.join(',')) */
+    return (
+        <span className="capitalize">{tagArray}</span>
+    )
 }
 
 
@@ -202,10 +222,7 @@ const ProductTable = () => {
             {
                 header: 'Tag',
                 accessorKey: 'tag',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.tag}</span>
-                },
+                cell: (props) => <TagColumn row={props.row.original} />,
             },
             {
                 header: '',

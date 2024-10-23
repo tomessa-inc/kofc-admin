@@ -9,7 +9,7 @@ export async function apiGetSalesDashboardData<
     })
 }
 
-export const URL = 'http://127.0.0.1:9000/api/v1/golf-media'
+export const URL = 'http://127.0.0.1:9000/media'
 export async function apiGetGalleries<T, U extends Record<string, unknown>>(
     data: U
 ) {
