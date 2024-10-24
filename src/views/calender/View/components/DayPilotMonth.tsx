@@ -275,8 +275,11 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
+            {name: "Frequency", id: "frequency", type: "select", options:optionsFrequency, selected: 0},
+            {name: "Viewing", id: "viewing", type: "select", options:optionsPublic, selected: true},
 
-        ];
+
+    ];
 
         const eventData = args.e.data;
 
@@ -323,7 +326,6 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
                     startDate={startDate}
                     onEventClick= {onEventClick}
                     onTimeRangeSelected={onTimeRangeSelected}
-                    //onEventClick={onEventClick}
                     ref={calenderRef}
                 />
             </div>

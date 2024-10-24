@@ -39,11 +39,16 @@ export const Month = () => {
     if (Array.isArray(data)) {
 
         dataArray = data.map((the: any) => {
+            let barColor = '#ff0000'
+           if (the.viewing) {
+               barColor = '#6aa84f';
+           }
             const jsonObject = {
                 id: the.id,
                 text: the.text,
                 start: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourStart),
                 end: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourEnd),
+                barColor: barColor
             }
 
             return jsonObject;

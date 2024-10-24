@@ -38,6 +38,7 @@ type Gallery = {
     name: string
     img: string
     description: string
+    viewing:boolean
     Tags: Tag[]
     createdAt: string
     updatedAt: string
@@ -223,6 +224,21 @@ const ProductTable = () => {
                 header: 'Tag',
                 accessorKey: 'tag',
                 cell: (props) => <TagColumn row={props.row.original} />,
+            },
+            {
+                header: 'Public',
+                accessorKey: 'public',
+                cell: (props) => {
+                    const row = props.row.original
+                    let view;
+                    if (row.viewing) {
+                        view = "true"
+                    } else {
+                        view = "false";
+                    }
+
+                    return <span className="capitalize">{view}</span>
+                },
             },
             {
                 header: '',

@@ -2,8 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     apiGetGalleries,
     apiDeleteSalesProducts,
+    apiPublishGallery
 } from '@/services/MediaService'
 import type { TableQueries } from '@/@types/common'
+import {apiPublishEvents} from "@/services/CalenderService";
 
 type Product = {
     id: string
@@ -65,6 +67,15 @@ export const getGalleries = createAsyncThunk(
         return response.data
     }
 )
+
+export const publishGallery = async <T, U extends Record<string, unknown>>(
+) => {
+
+    const response = await apiPublishGallery<T, U>()
+
+    return response.data
+}
+
 
 export const deleteProduct = async (data: { id: string | string[] }) => {
     const response = await apiDeleteSalesProducts<

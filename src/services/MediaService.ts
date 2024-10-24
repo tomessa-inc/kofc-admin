@@ -43,6 +43,20 @@ export async function apiGetGalleries<T, U extends Record<string, unknown>>(
     })
 }
 
+export async function  apiPublishGallery<T, U extends Record<string, unknown>>(
+
+) {
+    console.log(`${URL}/publish`)
+    const retval =  ApiService.fetchData<T>({
+        url: `${URL}/publish`,
+        method: 'post',
+    })
+
+    return retval
+}
+
+
+
 export async function   apiCreateTag<T, U extends Record<string, unknown>>(
     data: U
 ) {

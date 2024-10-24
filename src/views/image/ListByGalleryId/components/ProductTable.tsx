@@ -248,7 +248,13 @@ const ProductTable = () => {
                 accessorKey: 'primaryImage',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.primaryImage}</span>
+                    let imageText;
+                    if (row.primaryImage) {
+                        imageText = 'true'
+                    } else {
+                        imageText = 'false'
+                    }
+                    return <span className="capitalize">{imageText}</span>
                 },
             },
             {
