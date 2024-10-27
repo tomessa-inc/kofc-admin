@@ -4,7 +4,7 @@ import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
     toggleDeleteConfirmation,
     deleteProduct,
-    getUsers,
+    getAccess,
     useAppDispatch,
     useAppSelector,
 } from '../store'
@@ -12,13 +12,13 @@ import {
 const ProductDeleteConfirmation = () => {
     const dispatch = useAppDispatch()
     const dialogOpen = useAppSelector(
-        (state) => state.userList.data.deleteConfirmation
+        (state) => state.accessList.data.deleteConfirmation
     )
     const selectedProduct = useAppSelector(
-        (state) => state.userList.data.selectedProduct
+        (state) => state.accessList.data.selectedProduct
     )
     const tableData = useAppSelector(
-        (state) => state.userList.data.tableData
+        (state) => state.accessList.data.tableData
     )
 
     const onDialogClose = () => {
@@ -30,7 +30,7 @@ const ProductDeleteConfirmation = () => {
         const success = await deleteProduct({ id: selectedProduct })
 
         if (success) {
-            dispatch(getUsers(tableData))
+            dispatch(getAccess(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}

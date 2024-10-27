@@ -4,13 +4,13 @@ import AdaptableCard from '@/components/shared/AdaptableCard'
 import ProductTable from './components/ProductTable'
 import ProductTableTools from './components/ProductTableTools'
 
-injectReducer('userList', reducer)
+injectReducer('accessList', reducer)
 
 const List = () => {
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">
-                <h3 className="mb-4 lg:mb-0">Users</h3>
+                <h3 className="mb-4 lg:mb-0">Access</h3>
                 <ProductTableTools />
             </div>
             <ProductTable />

@@ -15,6 +15,9 @@ type Options = {
 type FormFieldsName = {
     id: string
     name: string
+    firstName: string
+    lastName: string
+    email: string
     description: string
 }
 
@@ -52,34 +55,45 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                 />
             </FormItem>
             <FormItem
-                label="Gallery Name"
-                invalid={(errors.name && touched.name) as boolean}
+                label="First Name"
+                invalid={(errors.firstName && touched.firstName) as boolean}
+                errorMessage={errors.firstName}
+            >
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="firstName"
+                    placeholder="First Name"
+                    component={Input}
+                />
+            </FormItem>
+            <FormItem
+                label="Last Name"
+                invalid={(errors.lastName && touched.lastName) as boolean}
                 errorMessage={errors.name}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="name"
-                    placeholder="Name"
+                    name="lastNname"
+                    placeholder="Last Name"
                     component={Input}
                 />
             </FormItem>
+
             <FormItem
-                label="Description"
+                label="Email"
                 labelClass="!justify-start"
-                invalid={(errors.description && touched.description) as boolean}
-                errorMessage={errors.description}
+                invalid={(errors.email && touched.email) as boolean}
+                errorMessage={errors.email}
             >
-                <Field name="description">
-                    {({ field, form }: FieldProps) => (
-                        <RichTextEditor
-                            value={field.value}
-                            onChange={(val) => 
-                                form.setFieldValue(field.name, val)
-                            }
-                        />
-                    )}
-                </Field>
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="email"
+                    placeholder="Email"
+                    component={Input}
+                />
             </FormItem>
         </AdaptableCard>
     )

@@ -20,17 +20,11 @@ type FormikRef = FormikProps<any>
 type InitialData = {
     id?: string
     name?: string
-    access?: accessList[],
     description?: string
 }
 
-type accessList = {
-    label: string,
-    value: string
-}
-
 export type FormModel = Omit<InitialData, 'tags'> & {
-    accessList: { label: string; value: string }[] | string[]
+    tags: { label: string; value: string }[] | string[]
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -42,7 +36,6 @@ type OnDelete = (callback: OnDeleteCallback) => void
 type Form = {
     initialData?: InitialData
     type: 'edit' | 'new'
-    accessList: accessList[],
     onDiscard?: () => void
     onDelete?: OnDelete
     onFormSubmit: (formData: FormModel, setSubmitting: SetSubmitting) => void
@@ -101,24 +94,20 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
     )
 }
 
-const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
+const AccessForm = forwardRef<FormikRef, Form>((props, ref) => {
     const {
         type,
         initialData = {
             id: '',
-            firstNme: '',
-            lastName: '',
-            email: '',
-            access: [],
+            name: '',
             description: '',
         },
-        accessList = [{label: '', value: ''}],
         onFormSubmit,
         onDiscard,
         onDelete,
     } = props
 
-    const newId = useUniqueId('product-')
+    //const newId = useUniqueId('product-')
 
     return (
         <>
@@ -130,14 +119,8 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => {
-                        if (typeof tag !== 'string') {
-                            return tag.value
-                        }
-                        return tag
-                    })
                     if (type === 'new') {
-                        formData.id = newId
+                        formData.id = formData.name?.toLowerCase().replaceAll(' ', '-');
                     }
 
                     onFormSubmit?.(formData, setSubmitting)
@@ -152,12 +135,7 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                                         touched={touched}
                                         errors={errors} 
                                     />                               
-                                    <OrganizationFields
-                                        touched={touched}
-                                        errors={errors} 
-                                        values={values}
-                                        accessList={accessList}
-                                    />            
+
                                 </div>
                             </div>
                             <StickyFooter
@@ -199,6 +177,6 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
     )
 })
 
-UserForm.displayName = 'UserForm'
+AccessForm.displayName = 'AccessForm'
 
-export default UserForm
+export default AccessForm

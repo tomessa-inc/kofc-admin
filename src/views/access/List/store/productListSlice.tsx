@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetUsers,
+    apiGetAccess,
     apiDeleteSalesProducts,
-} from '@/services/UserService'
+} from '@/services/AccessService'
 import type { TableQueries } from '@/@types/common'
 
 type Product = {
@@ -16,10 +16,9 @@ type Product = {
     status: number
 }
 
-type User = {
+type Access = {
     id: string
     name: string
-    description: string;
     createdAt: string
     updatedAt: string
 }
@@ -28,7 +27,7 @@ type User = {
 type Products = Product[]
 
 type GetSalesProductsResponse = {
-    data:  User[]
+    data:  Access[]
     total: number
 }
 
@@ -45,23 +44,21 @@ export type UserListState = {
     selectedProduct: string
     tableData: TableQueries
     filterData: FilterQueries
-    userList: User[]
+    accessList: Access[]
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
-export const SLICE_NAME = 'userList'
+export const SLICE_NAME = 'accessList'
 
-export const getUsers = createAsyncThunk(
+export const getAccess = createAsyncThunk(
     `${SLICE_NAME}/users`,
     async (data: GetSalesProductsRequest) => {
 
-        const response = await apiGetUsers<
+        const response = await apiGetAccess<
             GetSalesProductsResponse,
             GetSalesProductsRequest
         >(data)
-        console.log('get all users')
-        console.log(response.data)
 
         return response.data
     }
@@ -90,7 +87,7 @@ const initialState: UserListState = {
     loading: false,
     deleteConfirmation: false,
     selectedProduct: '',
-    userList: [],
+    accessList: [],
     tableData: initialTableData,
     filterData: {
         name: '',
@@ -105,7 +102,7 @@ const productListSlice = createSlice({
     initialState,
     reducers: {
         updateProductList: (state, action) => {
-            state.userList = action.payload
+            state.accessList = action.payload
         },
         setTableData: (state, action) => {
             state.tableData = action.payload
@@ -122,12 +119,12 @@ const productListSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getUsers.fulfilled, (state, action) => {
-                state.userList = action.payload.data
+            .addCase(getAccess.fulfilled, (state, action) => {
+                state.accessList = action.payload.data
                 state.tableData.total = action.payload.total
                 state.loading = false
             })
-            .addCase(getUsers.pending, (state) => {
+            .addCase(getAccess.pending, (state) => {
                 state.loading = true
             })
     },

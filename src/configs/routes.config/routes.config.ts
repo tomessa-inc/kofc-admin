@@ -68,6 +68,43 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/calender/View')),
         authority: [],
     },
+    {
+        key: 'userList',
+        path: '/user',
+        component: lazy(() => import('@/views/user/List')),
+        authority: [],
+    },
+    {
+        key: 'userEdit',
+        path: '/user/edit/:userId',
+        component: lazy(() => import('@/views/user/Edit')),
+        authority: [],
+    },
+    {
+        key: 'userNew',
+        path: '/user/new',
+        component: lazy(() => import('@/views/user/New')),
+        authority: [],
+    },
+    {
+        key: 'accessList',
+        path: '/access',
+        component: lazy(() => import('@/views/access/List')),
+        authority: [],
+    },
+    {
+        key: 'accessEdit',
+        path: '/access/edit/:accessId',
+        component: lazy(() => import('@/views/access/Edit')),
+        authority: [],
+    },
+    {
+        key: 'accessNew',
+        path: '/access/new',
+        component: lazy(() => import('@/views/access/New')),
+        authority: [],
+    },
+
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',

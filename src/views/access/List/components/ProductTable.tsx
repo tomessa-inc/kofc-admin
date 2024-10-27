@@ -5,7 +5,7 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getUsers,
+    getAccess,
     setTableData,
     setSelectedProduct,
     toggleDeleteConfirmation,
@@ -76,7 +76,7 @@ const ActionColumn = ({ row }: { row: Gallery }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/user/edit/${row.id}`)
+        navigate(`/gallery/edit/${row.id}`)
     }
 
     const onDelete = () => {
@@ -136,19 +136,19 @@ const ProductTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.userList.data.tableData
+        (state) => state.accessList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.userList.data.filterData
+        (state) => state.accessList.data.filterData
     )
 
     const loading = useAppSelector(
-        (state) => state.userList.data.loading
+        (state) => state.accessList.data.loading
     )
 
     const data = useAppSelector(
-        (state) => state.userList.data.userList
+        (state) => state.accessList.data.accessList
     )
 
     useEffect(() => {
@@ -168,9 +168,8 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getUsers({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getAccess({ pageIndex, pageSize, sort, query, filterData }))
     }
-    
 
     const columns: ColumnDef<Gallery>[] = useMemo(
         () => [
@@ -188,7 +187,7 @@ const ProductTable = () => {
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <GalleryColumn row={row} />
+                    return <span className="capitalize">{row.name}</span>
                 },
             },
             {
@@ -197,14 +196,6 @@ const ProductTable = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return <span className="capitalize">{row.description}</span>
-                },
-            },
-            {
-                header: 'Tag',
-                accessorKey: 'tag',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.tag}</span>
                 },
             },
             {

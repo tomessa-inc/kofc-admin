@@ -14,7 +14,7 @@ type FormFieldsName = {
     tags: Options
 }
 
-type accessList = {
+type tagList = {
     label: string,
     value: string
 }
@@ -23,7 +23,7 @@ type accessList = {
 type OrganizationFieldsProps = {
     touched: FormikTouched<FormFieldsName>
     errors: FormikErrors<FormFieldsName>
-    accessList: accessList[],
+    tagList: tagList[],
     values: {
         tags: Options
         [key: string]: unknown
@@ -31,10 +31,8 @@ type OrganizationFieldsProps = {
 }
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
-    const { values = { category: '', tags: []}, touched, errors, accessList } = props
+    const { values = { category: '', tags: []}, touched, errors } = props
 
-    console.log('go')
-    console.log(accessList)
     return (
         <AdaptableCard divider isLastChild className="mb-4">
             <h5>Organizations</h5>
@@ -42,7 +40,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        label="Access"
+                        label="Tags"
                         invalid={
                             (errors.tags && touched.tags) as unknown as boolean
                         }
@@ -55,7 +53,6 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                     componentAs={CreatableSelect}
                                     field={field}
                                     form={form}
-                                    options={accessList}
                                     value={values.tags}
                                     onChange={(option) => {
                                         console.log('option');

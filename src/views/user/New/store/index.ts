@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import reducers, { SLICE_NAME, UserListState } from './productListSlice'
+import reducers, { SLICE_NAME,GalleryEditState } from './productEditSlice'
 import { useSelector } from 'react-redux'
 
 import type { TypedUseSelectorHook } from 'react-redux'
-import type { RootState } from '@/store'
+import type { RootState } from '../../../../store'
 
 const reducer = combineReducers({
     data: reducers,
@@ -12,11 +12,11 @@ const reducer = combineReducers({
 export const useAppSelector: TypedUseSelectorHook<
     RootState & {
         [SLICE_NAME]: {
-            data: UserListState
+            data: GalleryEditState
         }
     }
 > = useSelector
 
-export * from './productListSlice'
-export { useAppDispatch } from '@/store'
+export * from './productEditSlice'
+export { useAppDispatch } from '../../../../store'
 export default reducer

@@ -4,9 +4,9 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
-    getUsers,
-    getAccessList,
-    updateUser,
+    getGallery,
+    getTagsList,
+    updateGallery,
     deleteProduct,
     useAppSelector,
     useAppDispatch,
@@ -14,43 +14,43 @@ import reducer, {
 import { injectReducer } from '@/store'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import UserForm, {
+import GalleryForm, {
     FormModel,
     SetSubmitting,
     OnDeleteCallback,
-} from '@/views/user/Form'
+} from '@/views/gallery/Form'
 
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('UserEdit', reducer)
+injectReducer('Edit', reducer)
 
 const Edit = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.UserEdit.data.tableData
+        (state) => state.GalleryEdit.data.tableData
     )
 
     const location = useLocation()
     const navigate = useNavigate()
 
-    const userData = useAppSelector(
-        (state) => state.UserEdit.data.userData
+    const galleryData = useAppSelector(
+        (state) => state.GalleryEdit.data.galleryData
     )
 
-    const accessList = useAppSelector(
-        (state) => state.UserEdit.data.accessList
+    const tagList = useAppSelector(
+        (state) => state.GalleryEdit.data.tagList
     )
     const loading = useAppSelector(
-        (state) => state.UserEdit.data.loading
+        (state) => state.GalleryEdit.data.loading
     )
 
     const fetchData = (data: { id: string }) => {
-        dispatch(getUsers(data))
+        dispatch(getGallery(data))
     }
 
-    const fetchDataAccess = () => {
-        dispatch(getAccessList({ pageIndex, pageSize, sort, query}))
+    const fetchDataTag = () => {
+        dispatch(getTagsList({ pageIndex, pageSize, sort, query}))
     }
 
     const handleFormSubmit = async (
@@ -58,7 +58,7 @@ const Edit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
-        const success = await updateUser(values)
+        const success = await updateGallery(values)
         setSubmitting(false)
         if (success) {
             popNotification('updated')
@@ -104,19 +104,22 @@ const Edit = () => {
     }, [location.pathname])
 
     useEffect(() => {
-        fetchDataAccess()
+        fetchDataTag()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageIndex, pageSize, sort])
+
+    console.log('gallery')
+    console.log(galleryData);
 
     return (
         <>
             <Loading loading={loading}>
-                {!isEmpty(userData) && (
+                {!isEmpty(galleryData) && (
                     <>
-                        <UserForm
+                        <GalleryForm
                             type="edit"
-                            initialData={userData}
-                            accessList={accessList}
+                            initialData={galleryData}
+                            tagList={tagList}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                             onDelete={handleDelete}
@@ -124,14 +127,14 @@ const Edit = () => {
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(userData) && (
+            {!loading && isEmpty(galleryData) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"
                         darkModeSrc="/img/others/img-2-dark.png"
                         alt="No product found!"
                     />
-                    <h3 className="mt-8">No User found!</h3>
+                    <h3 className="mt-8">No gallery found!</h3>
                 </div>
             )}
         </>

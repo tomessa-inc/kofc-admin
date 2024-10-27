@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
 import {
-    getUsers,
+    getAccess,
     setFilterData,
     initialTableData,
     useAppDispatch,
@@ -37,13 +37,13 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.userList.data.filterData
+            (state) => state.accessList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
             dispatch(setFilterData(values))
-            dispatch(getUsers(initialTableData))
+            dispatch(getAccess(initialTableData))
         }
 
         return (
