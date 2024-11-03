@@ -5,7 +5,7 @@ import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
     getGallery,
-    getTagsList,
+    getAccessList,
     updateGallery,
     deleteProduct,
     useAppSelector,
@@ -14,35 +14,31 @@ import reducer, {
 import { injectReducer } from '@/store'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import GalleryForm, {
+import UserForm, {
     FormModel,
     SetSubmitting,
     OnDeleteCallback,
-} from '@/views/gallery/Form'
+} from '@/views/user/Form'
 
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('Edit', reducer)
+injectReducer('UserNew', reducer)
 
-const Edit = () => {
+const New = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.GalleryEdit.data.tableData
+        (state) => state.UserNew.data.tableData
     )
 
     const location = useLocation()
     const navigate = useNavigate()
 
-    const galleryData = useAppSelector(
-        (state) => state.GalleryEdit.data.galleryData
-    )
-
-    const tagList = useAppSelector(
-        (state) => state.GalleryEdit.data.tagList
+    const accessList = useAppSelector(
+        (state) => state.UserNew.data.accessList
     )
     const loading = useAppSelector(
-        (state) => state.GalleryEdit.data.loading
+        (state) => state.UserNew.data.loading
     )
 
     const fetchData = (data: { id: string }) => {
@@ -50,7 +46,7 @@ const Edit = () => {
     }
 
     const fetchDataTag = () => {
-        dispatch(getTagsList({ pageIndex, pageSize, sort, query}))
+        dispatch(getAccessList({ pageIndex, pageSize, sort, query}))
     }
 
     const handleFormSubmit = async (
@@ -70,13 +66,6 @@ const Edit = () => {
         navigate('/app/sales/product-list')
     }
 
-    const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
-        setDialogOpen(false)
-        const success = await deleteProduct({ id: galleryData.id })
-        if (success) {
-            popNotification('deleted')
-        }
-    }
 
     const popNotification = (keyword: string) => {
         toast.push(
@@ -108,26 +97,26 @@ const Edit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageIndex, pageSize, sort])
 
-    console.log('gallery')
-    console.log(galleryData);
+    console.log('access')
+    console.log(accessList);
 
     return (
         <>
             <Loading loading={loading}>
-                {!isEmpty(galleryData) && (
+                {!isEmpty(accessList) && (
                     <>
-                        <GalleryForm
+                        <UserForm
                             type="edit"
-                            initialData={galleryData}
-                            tagList={tagList}
+                        //    initialData={galleryData}
+                            accessList={accessList}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
-                            onDelete={handleDelete}
+                        //    onDelete={handleDelete}
                         />
                     </>
                 )}
             </Loading>
-            {!loading && isEmpty(galleryData) && (
+            {!loading && isEmpty(accessList) && (
                 <div className="h-full flex flex-col items-center justify-center">
                     <DoubleSidedImage
                         src="/img/others/img-2.png"
@@ -141,4 +130,4 @@ const Edit = () => {
     )
 }
 
-export default Edit
+export default New

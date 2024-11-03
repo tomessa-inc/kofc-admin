@@ -58,12 +58,15 @@ export async function apiGetUserById<T, U extends Record<string, unknown>>(
     params: U
 ) {
     console.log(`${URL}/id/${params['id']}`);
+    console.log(params)
     return ApiService.fetchData<T>({
         url: `${URL}/id/${params['id']}`,
-        method: 'get',
+        method: 'post',
         params,
     })
 }
+
+
 
 export async function   apiCreateTag<T, U extends Record<string, unknown>>(
     data: U
@@ -164,9 +167,9 @@ export async function apiUpdateUser<T, U extends Record<string, unknown>>(
 ) {
     console.log('the data to send')
     console.log(data)
-    console.log(`${URL}/id/${data['ID']}`)
+    console.log(`${URL}/id/${data['id']}`)
    return ApiService.fetchData<T>({
-        url: `${URL}/id/${data['ID']}`,
+        url: `${URL}/id/${data['id']}`,
         method: 'put',
         data,
     }) 

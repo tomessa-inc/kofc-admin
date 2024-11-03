@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetGallleryById,
-    apiGetTagsList,
-    apiPutSalesProduct,
-    apiPutGallery,
-    apiDeleteSalesProducts,
-} from '../../../../services/MediaService'
+    apiGetAccessList,
+} from '../../../../services/AccessService'
 
 import type { TableQueries } from '../../../../@types/common'
 
@@ -44,7 +40,7 @@ type Tag = {
     description: string
 }
 
-type tagList = {
+type accessList = {
     label: string
     value: string
 }
@@ -66,21 +62,21 @@ export const initialTableData: TableQueries = {
 }
 
 
-export type GalleryEditState = {
+export type UserNewState = {
     loading: boolean
     galleryData: GalleryData
     tableData: TableQueries
-    tagList: tagList[]
+    accessList: accessList[]
 }
 
 type GetSalesProductResponse = GalleryData
-type GetSalesTagResponse = tagList[]
+type GetSalesTagResponse = accessList[]
 
 type GetTagsRequest = TableQueries & { filterData?: FilterQueries }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
-export const SLICE_NAME = 'GalleryEdit'
+export const SLICE_NAME = 'UserNew'
 
 export const getGallery = createAsyncThunk(
     SLICE_NAME + '/getGallery',
@@ -94,11 +90,11 @@ export const getGallery = createAsyncThunk(
     }
 )
 
-export const getTagsList = createAsyncThunk(
-    `${SLICE_NAME}/media/tag/list`,
+export const getAccessList = createAsyncThunk(
+    `${SLICE_NAME}/access/list`,
     async (data: GetSalesProductsRequest) => {
 
-        const response = await apiGetTagsList<
+        const response = await apiGetAccessList<
             GetSalesTagResponse,
             GetSalesProductsRequest
         >(data)
@@ -130,7 +126,7 @@ export const deleteProduct = async <T, U extends Record<string, unknown>>(
     return response.data
 }
 
-const initialState: GalleryEditState = {
+const initialState: UserNewState = {
     loading: true,
     galleryData: {},
     tagList: [],
@@ -150,11 +146,11 @@ const productEditSlice = createSlice({
             .addCase(getGallery.pending, (state) => {
                 state.loading = true
             })
-            .addCase(getTagsList.fulfilled, (state, action) => {
-                state.tagList = action.payload
+            .addCase(getAccessList.fulfilled, (state, action) => {
+                state.accessList = action.payload
                 state.loading = false
             })
-            .addCase(getTagsList.pending, (state) => {
+            .addCase(getAccessList.pending, (state) => {
                 state.loading = true
             })
 

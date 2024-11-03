@@ -29,7 +29,7 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/gallery/Edit')),
         authority: [],
         meta: {
-            header: 'Edit gallery',
+            header: 'New gallery',
         },
     },
     {
@@ -83,7 +83,7 @@ export const protectedRoutes = [
     {
         key: 'userNew',
         path: '/user/new',
-        component: lazy(() => import('@/views/user/New')),
+        component: lazy(() => import('@/views/user/New/New')),
         authority: [],
     },
     {

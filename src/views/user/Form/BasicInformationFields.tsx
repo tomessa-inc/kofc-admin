@@ -75,7 +75,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="lastNname"
+                    name="lastName"
                     placeholder="Last Name"
                     component={Input}
                 />

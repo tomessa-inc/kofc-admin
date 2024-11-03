@@ -91,6 +91,12 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     ];
 
 
+    const interestedOptions = [
+        { name: " Yes", id: "A" },
+        { name: " No", id: "B" },
+    ];
+
+
 
     const optionsPublic = [
         { name: "Public", id: true},
@@ -269,17 +275,17 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     } */
 
     const onEventClick  = async (args:any) => {
-
+        console.log('hee')
         const form = [
-            {name: "Event", id: "text"},
-            {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
-            {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
-            {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
+            {name: "Event", id: "text", disabled: true},
+            {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime", disabled: true},
+            {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime", disabled:true},
+/*            {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
             {name: "Frequency", id: "frequency", type: "select", options:optionsFrequency, selected: 0},
-            {name: "Viewing", id: "viewing", type: "select", options:optionsPublic, selected: true},
+            {name: "Viewing", id: "viewing", type: "select", options:optionsPublic, selected: true}, */
+            {name: "Interested To Volunteer for this event?", id: "interested", type: "radio", options:interestedOptions, selected: "A"},
+        ];
 
-
-    ];
 
         const eventData = args.e.data;
 
@@ -292,9 +298,6 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
         const dp = args.control;
 
         dp.events.update(modal.result);
-
-
-
 
 
 

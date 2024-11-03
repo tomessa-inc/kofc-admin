@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
-    apiGetUsers,
+    apiGetUserById,
     apiUpdateUser
 } from '../../../../services/UserService'
 
@@ -85,17 +85,21 @@ type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
 export const SLICE_NAME = 'UserEdit'
 
-export const getUsers = createAsyncThunk(
-    SLICE_NAME + '/users/list',
+export const getUserById = createAsyncThunk(
+    SLICE_NAME + '/users/edit',
     async (data: { id: string }) => {
-        const response = await apiGetUsers<
+        const response = await apiGetUserById<
             GetSalesProductResponse,
             { id: string }
         >(data)
-
+        console.log("users")
+        console.log(response.data)
         return response.data
     }
 )
+
+//console.log("get users")
+//console.log(getUserById)
 
 export const getAccessList = createAsyncThunk(
     `${SLICE_NAME}/access/list`,
@@ -146,11 +150,11 @@ const productEditSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getUsers.fulfilled, (state, action) => {
+            .addCase(getUserById.fulfilled, (state, action) => {
                 state.userData = action.payload
                 state.loading = false
             })
-            .addCase(getUsers.pending, (state) => {
+            .addCase(getUserById.pending, (state) => {
                 state.loading = true
             })
             .addCase(getAccessList.fulfilled, (state, action) => {

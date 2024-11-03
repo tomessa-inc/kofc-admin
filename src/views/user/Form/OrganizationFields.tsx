@@ -31,14 +31,13 @@ type OrganizationFieldsProps = {
 }
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
-    const { values = { category: '', tags: []}, touched, errors, accessList } = props
+    const { values = { category: '', access: []}, touched, errors, accessList } = props
 
-    console.log('go')
-    console.log(accessList)
+//    console.log('go')
+  //  console.log(accessList)
     return (
         <AdaptableCard divider isLastChild className="mb-4">
-            <h5>Organizations</h5>
-            <p className="mb-6">Section to config the product attribute</p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
@@ -48,7 +47,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                         }
                         errorMessage={errors.tags as string}
                     >
-                        <Field name="tags">
+                        <Field name="access">
                             {({ field, form }: FieldProps) => (
                                 <Select
                                     isMulti
@@ -56,7 +55,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                     field={field}
                                     form={form}
                                     options={accessList}
-                                    value={values.tags}
+                                    value={values.access}
                                     onChange={(option) => {
                                         console.log('option');
                                         console.log(option)

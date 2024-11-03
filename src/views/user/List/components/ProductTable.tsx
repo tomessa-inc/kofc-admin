@@ -35,6 +35,8 @@ type Product = {
 
 type Gallery = {
     id: string
+    firstName:string
+    lastName:string
     name: string
     img: string
     description: string
@@ -184,11 +186,20 @@ const ProductTable = () => {
                 },
             },
             {
-                header: 'Name',
-                accessorKey: 'name',
+                header: 'First Name',
+                accessorKey: 'firstName',
                 cell: (props) => {
                     const row = props.row.original
-                    return <GalleryColumn row={row} />
+                    return <span className="capitalize">{row.firstName}</span>
+
+                },
+            },
+            {
+                header: 'Last Name',
+                accessorKey: 'lastName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span className="capitalize">{row.lastName}</span>
                 },
             },
             {

@@ -20,7 +20,10 @@ type FormikRef = FormikProps<any>
 type InitialData = {
     id?: string
     name?: string
+    firstName: string
+    lastName: string
     access?: accessList[],
+    Accesses?: accessList[],
     description?: string
 }
 
@@ -51,7 +54,7 @@ type Form = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Product Name Required'),
+    firstName: Yup.string().required('Product Name Required'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -130,7 +133,10 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     const formData = cloneDeep(values)
-                    formData.tags = formData.tags.map((tag) => {
+                    console.log('right here')
+                    console.log(formData)
+                    console.log(formData.access);
+                    formData.Accesses = formData.access.map((tag) => {
                         if (typeof tag !== 'string') {
                             return tag.value
                         }

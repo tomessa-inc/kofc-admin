@@ -4,7 +4,7 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
-    getUsers,
+    getUserById,
     getAccessList,
     updateUser,
     deleteProduct,
@@ -46,8 +46,9 @@ const Edit = () => {
     )
 
     const fetchData = (data: { id: string }) => {
-        dispatch(getUsers(data))
+        dispatch(getUserById(data))
     }
+
 
     const fetchDataAccess = () => {
         dispatch(getAccessList({ pageIndex, pageSize, sort, query}))
@@ -98,6 +99,8 @@ const Edit = () => {
         const path = location.pathname.substring(
             location.pathname.lastIndexOf('/') + 1
         )
+        console.log('path')
+        console.log(path)
         const requestParam = { id: path }
         fetchData(requestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps
