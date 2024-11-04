@@ -21,7 +21,7 @@ export const formatImage100x100 = (key:any) => {
         }
     });
 
-    return `https://images.tc-testing-check.net/${signatureSmall}`;
+    return `https://images.kofc9544.ca/${signatureSmall}`;
     }
 
     export const formatImage = (key:any) => {
@@ -33,6 +33,6 @@ export const formatImage100x100 = (key:any) => {
                     }
                 });
 
-                return `https://images.tc-testing-check.net/${signatureSmall}`;
+                return `https://images.kofc9544.ca/${signatureSmall}`;
 
 }
