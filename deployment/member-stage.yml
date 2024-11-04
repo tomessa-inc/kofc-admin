@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+  #      - git config --global credential.helper '!aws --region us-east-1 codecommit credential-helper $@'
+  #     - git config --global credential.UseHttpPath true
+  pre_build:
+    commands:
+      - aws s3 sync s3://kofc9544-config/ .
+      - npm --version
+      - cat src/configs/app.config.ts
+      #  - npm install --save @angular/material @angular/cdk
+      - yarn install
+  #      - npm install --save @angular/material @angular/cdk fs path ok
+  build:
+    commands:
+      - yarn build
+  post_build:
+    commands:
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build'
+  discard-paths: no
