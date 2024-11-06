@@ -9,8 +9,8 @@ export type AppConfig = {
 }
 
 export const appConfig: AppConfig = {
-    apiPrefix: 'https://api-stage.kofc9544.ca',
-    webPrefix: 'https://stage.kofc9544.ca',
+    apiPrefix: 'https://api.kofc9544.ca',
+    webPrefix: 'https://www.kofc9544.ca',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
