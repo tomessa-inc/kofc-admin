@@ -33,7 +33,7 @@ type accessList = {
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
-    accessList: { label: string; value: string }[] | string[]
+    accessList: { label: string; value: string }[] | any
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -134,9 +134,10 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     const formData = cloneDeep(values)
                     console.log('right here')
-                    console.log(formData)
-                    console.log(formData.access);
-                    formData.Accesses = formData.access.map((tag) => {
+                   // console.log(formData)
+                    //console.log(formData.access);
+
+                    formData.access = formData.access.map((tag) => {
                         if (typeof tag !== 'string') {
                             return tag.value
                         }

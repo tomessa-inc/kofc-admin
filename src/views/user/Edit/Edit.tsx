@@ -64,7 +64,7 @@ const Edit = () => {
         if (success) {
             popNotification('updated')
         }
-        navigate('/gallery')
+        navigate('/user')
     }
 
     const handleDiscard = () => {
@@ -99,8 +99,8 @@ const Edit = () => {
         const path = location.pathname.substring(
             location.pathname.lastIndexOf('/') + 1
         )
-        console.log('path')
-        console.log(path)
+    //    console.log('path')
+      //  console.log(path)
         const requestParam = { id: path }
         fetchData(requestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps

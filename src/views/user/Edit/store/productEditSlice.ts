@@ -16,12 +16,29 @@ type GalleryFirst = {
     data: GalleryData
 }
 
+type FirstUserData = {
+    data: UserData
+  //  access:AccessObject[]
+}
+
+type AccessObject = {
+    label?: string
+    value?: string
+    id?:string
+    name?:string
+}
+
 type UserData = {
     id?: string
     name?: string
+    firstName?: string
+    lastName? :string
     description?: string
     updatedAt?: string
     createdAt?: string
+    access?: any
+    Accesses?: any;
+
 }
 
 type ImagesData = {
@@ -92,8 +109,18 @@ export const getUserById = createAsyncThunk(
             GetSalesProductResponse,
             { id: string }
         >(data)
-        console.log("users")
-        console.log(response.data)
+     //   console.log("users get by id")
+   //     console.log(response);
+
+
+        const access = response.data.access.map((tag) => {
+
+            return {"label":tag.name, "value":tag.id}
+        })
+
+        response.data.access = access;
+
+      //  console.log(response.data)
         return response.data
     }
 )

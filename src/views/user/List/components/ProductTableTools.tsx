@@ -21,10 +21,10 @@ const ProductTableTools = () => {
             </Link>
             <Link
                 className="block lg:inline-block md:mb-0 mb-4"
-                to="/app/sales/product-new"
+                to="/user/new"
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Add Product
+                    Add User
                 </Button>
             </Link>
         </div>
