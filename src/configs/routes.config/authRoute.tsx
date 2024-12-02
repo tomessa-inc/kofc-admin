@@ -22,7 +22,7 @@ const authRoute: Routes = [
     },
     {
         key: 'resetPassword',
-        path: `/reset-password`,
+        path: `/reset-password/:token`,
         component: lazy(() => import('@/views/auth/ResetPassword')),
         authority: [],
     },

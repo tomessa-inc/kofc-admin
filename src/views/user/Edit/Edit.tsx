@@ -59,6 +59,7 @@ const Edit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
+        values.password = values.new_password
         const success = await updateUser(values)
         setSubmitting(false)
         if (success) {

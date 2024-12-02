@@ -87,6 +87,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'resetPassword',
+        path: `/user/reset-password`,
+        component: lazy(() => import('@/views/user/ResetPassword')),
+        authority: [],
+    },
+    {
         key: 'accessList',
         path: '/access',
         component: lazy(() => import('@/views/access/List')),

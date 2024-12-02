@@ -19,6 +19,7 @@ type FormFieldsName = {
     lastName: string
     email: string
     description: string
+    password: string
 }
 
 type BasicInformationFields = {
@@ -52,8 +53,18 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     name="id"
                     placeholder="id"
                     component={Input}
+                    disabled={true}
                 />
             </FormItem>
+
+                <Field
+                    type="hidden"
+                    autoComplete="off"
+                    name="id"
+                    placeholder="id"
+                    component={Input}
+                />
+
             <FormItem
                 label="First Name"
                 invalid={(errors.firstName && touched.firstName) as boolean}
@@ -92,6 +103,20 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     autoComplete="off"
                     name="email"
                     placeholder="Email"
+                    component={Input}
+                />
+            </FormItem>
+            <FormItem
+                label="Reset Password"
+                labelClass="!justify-start"
+                invalid={(errors.password && touched.password) as boolean}
+                errorMessage={errors.password}
+            >
+                <Field
+                    type="text"
+                    autoComplete="off"
+                    name="new_password"
+                    placeholder="Password"
                     component={Input}
                 />
             </FormItem>

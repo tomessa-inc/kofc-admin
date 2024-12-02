@@ -25,6 +25,8 @@ type InitialData = {
     access?: accessList[],
     Accesses?: accessList[],
     description?: string
+    password: string
+    new_password: string
 }
 
 type accessList = {
@@ -179,14 +181,6 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                                     )}
                                 </div>
                                 <div className="md:flex items-center">
-                                    <Button
-                                        size="sm"
-                                        className="ltr:mr-3 rtl:ml-3"
-                                        type="button"
-                                        onClick={() => onDiscard?.()}
-                                    >
-                                        Discard
-                                    </Button>
                                     <Button
                                         size="sm"
                                         variant="solid"

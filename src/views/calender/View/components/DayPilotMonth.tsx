@@ -8,6 +8,7 @@ import {getEventMonthByDay} from "@/views/calender/View/store";
 import {date} from "yup";
 import {FormikErrors, FormikTouched} from "formik";
 import "./DayPilotMonth.css"
+import {getUsers} from "@/views/calender/View/store";
 
 export type Event = {
     "id": string,
@@ -30,12 +31,31 @@ type MonthFieldProps = {
 export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     const { events, startDate } = props
 
+    const dispatch = useAppDispatch()
 
     const [state, setState] = useState({
         startDate: DayPilot.Date.today(),
     });
+
     const calenderRef : React.RefObject<any> = React.createRef();
     const tableRef = useRef<DataTableResetHandle>(null)
+
+   const { pageIndex, pageSize, sort, query, total } = useAppSelector(
+        (state) => state.events.data.tableData
+    )
+
+    const filterData = useAppSelector(
+        (state) => state.events.data.filterData
+    )
+
+    const fetchData = () => {
+        dispatch(getUsers({ pageIndex, pageSize:200, sort: {order: "asc", key:"firstName"}, query, filterData }))
+    }
+
+    useEffect(() => {
+        fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageIndex, pageSize, sort])
 
 //
 //
@@ -47,10 +67,21 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
         )
 
      */
-    const data = useAppSelector(
-        (state) => state.events.data
+    const userList = useAppSelector(
+        (state) => state.events.data.userList
     )
 
+    let userListValue = [{name:"loading....", id:"none"}]
+    if (userList !== undefined) {
+        userListValue = userList.map((user) => {
+            return {name: `${user.firstName} ${user.lastName}`, id: user.id}
+
+        });
+    }
+    console.log('user')
+    console.log(userListValue)
+//
+//    const userListValue =
     /*
         const filterData = useAppSelector(
             (state) => state.events.data.filterData
@@ -121,6 +152,7 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
             {name: "Event", id: "text"},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
+            {name: "Owner", id: "owner", type: "select", options:userListValue, selected: "none"},
             {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
             {name: "Frequency", id: "frequency", type: "select", options:optionsFrequency, selected: 0},
             {name: "Viewing", id: "viewing", type: "select", options:optionsPublic, selected: true},
@@ -280,6 +312,7 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
             {name: "Event", id: "text", disabled: true},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime", disabled: true},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime", disabled:true},
+
 /*            {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
             {name: "Frequency", id: "frequency", type: "select", options:optionsFrequency, selected: 0},
             {name: "Viewing", id: "viewing", type: "select", options:optionsPublic, selected: true}, */

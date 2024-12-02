@@ -3,9 +3,13 @@ import {
     apiCreateEvent,
     apiGetEventMonthByDay, apiGetEvents, apiPublishEvents,
 } from '@/services/CalenderService'
+import {
+    apiGetUsers
+} from '@/services/UserService'
 import type { TableQueries } from '@/@types/common'
 import {apiPutGallery} from "@/services/MediaService";
 import {DayPilot} from "@daypilot/daypilot-lite-react";
+import {User} from "@/views/user/List/store";
 
 
 type Product = {
@@ -46,9 +50,10 @@ export type EventState = {
     loading: boolean
     deleteConfirmation: boolean
     selectedProduct: string
- /*   tableData: TableQueries */
-   // filterData: FilterQueries
+    tableData: TableQueries
+   filterData: FilterQueries
     data: Event[],
+    userList: User[],
     eventList: any
 
     //eventList: TableQueries
@@ -63,8 +68,22 @@ export const createEvent = async <T, U extends Record<string, unknown>>(
 ) => {
 
     const response = await apiCreateEvent<T, U>(data)
+    console.log(response);
     return response.data
 }
+
+export const getUsers = createAsyncThunk(
+    `${SLICE_NAME}/users`,
+    async (data: GetSalesProductsRequest) => {
+
+        const response = await apiGetUsers<
+            GetSalesProductsResponse,
+            GetSalesProductsRequest
+        >(data)
+
+        return response.data
+    }
+)
 
 
 export const createEvent2222 = createAsyncThunk(
@@ -188,13 +207,13 @@ const initialState: EventState = {
     deleteConfirmation: false,
     selectedProduct: '',
     eventList: initialEvent,
- //   tableData: initialTableData,
-   /* filterData: {
+    tableData: initialTableData,
+    filterData: {
         name: '',
         category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
         status: [0, 1, 2],
         productStatus: 0,
-    }, */
+    },
 }
 
 const productListSlice = createSlice({
@@ -204,14 +223,17 @@ const productListSlice = createSlice({
         updateEventCalender: (state, action) => {
             state.data = action.payload
         },
-        /*
+        setUsers: (state, action) => {
+            state.userList = action.payload
+        },
+
         setTableData: (state, action) => {
             state.tableData = action.payload
-        }, */
+        },
 
-    /*    setFilterData: (state, action) => {
+       setFilterData: (state, action) => {
             state.filterData = action.payload
-        }, */
+        },
         toggleDeleteConfirmation: (state, action) => {
             state.deleteConfirmation = action.payload
         },
@@ -229,13 +251,23 @@ const productListSlice = createSlice({
             .addCase(getEventMonthByDay.pending, (state) => {
                 state.loading = true
             })
+
+            .addCase(getUsers.fulfilled, (state, action) => {
+                state.userList = action.payload.data
+                //      state.tableData.total = action.payload.total
+                state.loading = false
+            })
+            .addCase(getUsers.pending, (state) => {
+                state.loading = true
+            })
     },
 })
 
 export const {
     updateEventCalender,
-   // setTableData,
-  //  setFilterData,
+    setUsers,
+    setTableData,
+    setFilterData,
     toggleDeleteConfirmation,
     setSelectedProduct,
 } = productListSlice.actions

@@ -109,9 +109,6 @@ export const getUserById = createAsyncThunk(
             GetSalesProductResponse,
             { id: string }
         >(data)
-     //   console.log("users get by id")
-   //     console.log(response);
-
 
         const access = response.data.access.map((tag) => {
 

@@ -4,6 +4,7 @@ import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import CreatableSelect from 'react-select/creatable'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
+import {string} from "yup";
 
 type Options = {
     label: string
@@ -31,10 +32,18 @@ type OrganizationFieldsProps = {
 }
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
-    const { values = { category: '', access: []}, touched, errors, accessList } = props
+    const { values = { category: '', access: [{label:null, value:null}]}, touched, errors, accessList } = props
 
 //    console.log('go')
   //  console.log(accessList)
+
+    let accessDisabled = true;
+    values.access.map((access:{label:null, value:null}) => {
+         if ("access" === access.value) {
+             accessDisabled = false
+         }
+    })
+
     return (
         <AdaptableCard divider isLastChild className="mb-4">
 
@@ -54,6 +63,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                     componentAs={CreatableSelect}
                                     field={field}
                                     form={form}
+                                    isDisabled={accessDisabled}
                                     options={accessList}
                                     value={values.access}
                                     onChange={(option) => {

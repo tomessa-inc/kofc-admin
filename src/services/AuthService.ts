@@ -38,7 +38,7 @@ export async function apiSignOut() {
 
 export async function apiForgotPassword(data: ForgotPassword) {
     return ApiService.fetchData({
-        url: '/forgot-password',
+        url: `${URL}/forgot-password`,
         method: 'post',
         data,
     })
@@ -46,8 +46,33 @@ export async function apiForgotPassword(data: ForgotPassword) {
 
 export async function apiResetPassword(data: ResetPassword) {
     return ApiService.fetchData({
-        url: '/reset-password',
+        url: `${URL}/reset-password/:token`,
         method: 'post',
         data,
     })
 }
+
+export async function ApiGetAuthentication<T, U extends Record<string, unknown>>(
+    params: U
+) {
+//    console.log(`${URL}/id/${params['id']}`);
+//    console.log(params)
+    console.log( `${URL}/reset-password-token/${params['id']}`)
+  //  console.log(params);
+
+    return ApiService.fetchData<T>({
+        url: `${URL}/reset-password-token/${params['id']}`,
+        method: 'post',
+        params,
+    })
+}
+/*
+
+export async function ApiGetAuthenication(data: ResetPassword) {
+    return ApiService.fetchData({
+        url: `${URL}/reset-password/:token`,
+        method: 'post',
+        data,
+    })
+}
+*/

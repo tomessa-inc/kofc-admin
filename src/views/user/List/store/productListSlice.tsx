@@ -16,9 +16,11 @@ type Product = {
     status: number
 }
 
-type User = {
+export type User = {
     id: string
     name: string
+    firstName: string
+    lastName: string
     description: string;
     createdAt: string
     updatedAt: string
