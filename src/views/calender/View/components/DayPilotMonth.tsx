@@ -147,9 +147,9 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     } */
 
     const onTimeRangeSelected = async (args: any) => {
-        console.log('on time selecte')
         const form = [
-            {name: "Event", id: "text"},
+            {name: "Event", id: "text", type:"text"},
+            {name: "Description", id: "description", type:"textarea"},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime"},
             {name: "Owner", id: "owner", type: "select", options:userListValue, selected: "none"},
@@ -217,6 +217,7 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
                 end: args.end.value,
                 id: DayPilot.guid(),
                 text: modal.result.text,
+                description: modal.result.description,
                 recurring: modal.result.recurring ?? "none",
                 frequency: modal.result.frequency ?? "0",
                 viewing: modal.result.viewing ?? true
@@ -312,6 +313,7 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
             {name: "Event", id: "text", disabled: true},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime", disabled: true},
             {name: "End", id: "end", dateFormat: "MM/dd/yyyy", type: "datetime", disabled:true},
+            {name: "Description", id: "description", type: "textarea", disabled:true},
 
 /*            {name: "Recurring", id: "recurring", type: "select", options:options, selected: "none"},
             {name: "Frequency", id: "frequency", type: "select", options:optionsFrequency, selected: 0},
@@ -349,6 +351,7 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
         const start = updateCalender().visibleStart();
         const end = updateCalender().visibleEnd();
         const {data} = await DayPilot.Http.post(`http://localhost:9000/event/api/events`);
+
         console.log(data);
         //this.calendar.update({events: data});
         updateCalender().update({events: data})

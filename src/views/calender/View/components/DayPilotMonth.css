@@ -5,3 +5,7 @@
 .modal_default_form_item input[type="text"] {
     border:1px solid black;
 }
+
+.modal_default_form_item textarea {
+    border:1px solid black;
+}

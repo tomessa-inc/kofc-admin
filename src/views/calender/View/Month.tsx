@@ -34,6 +34,9 @@ export const Month = () => {
         (state) => state.events.data.data
     )
 
+    console.log('load data')
+    console.log(data);
+
     let dataArray: Event[] = [];
 
     if (Array.isArray(data)) {
@@ -48,6 +51,7 @@ export const Month = () => {
                 text: the.text,
                 start: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourStart),
                 end: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourEnd),
+                description: the.description,
                 barColor: barColor
             }
 
