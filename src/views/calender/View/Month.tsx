@@ -28,14 +28,16 @@ export const Month = () => {
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
         (state) => state.events.data.data
     )
-
  */
+    /*
+    const { avatar, userName, authority, email } = useAppSelector(
+        (state) => state.auth.user
+    )
+*/
     const data = useAppSelector(
         (state) => state.events.data.data
     )
 
-    console.log('load data')
-    console.log(data);
 
     let dataArray: Event[] = [];
 
@@ -48,10 +50,10 @@ export const Month = () => {
            }
             const jsonObject = {
                 id: the.id,
-                text: the.text,
+                text: the.Event.text,
                 start: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourStart),
                 end: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourEnd),
-                description: the.description,
+                description: the.Event.description,
                 barColor: barColor
             }
 

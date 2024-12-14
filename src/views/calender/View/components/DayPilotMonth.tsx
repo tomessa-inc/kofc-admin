@@ -31,11 +31,13 @@ type MonthFieldProps = {
 export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     const { events, startDate } = props
 
+
     const dispatch = useAppDispatch()
 
     const [state, setState] = useState({
         startDate: DayPilot.Date.today(),
     });
+
 
     const calenderRef : React.RefObject<any> = React.createRef();
     const tableRef = useRef<DataTableResetHandle>(null)
@@ -46,6 +48,10 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
 
     const filterData = useAppSelector(
         (state) => state.events.data.filterData
+    )
+
+    const { avatar, userName, authority, email, access } = useAppSelector(
+        (state) => state.auth.user
     )
 
     const fetchData = () => {
@@ -78,8 +84,6 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
 
         });
     }
-    console.log('user')
-    console.log(userListValue)
 //
 //    const userListValue =
     /*
@@ -147,6 +151,24 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     } */
 
     const onTimeRangeSelected = async (args: any) => {
+        if (access === undefined) {
+            return
+        }
+
+        let accessCheck = false;
+        access.map((acc) => {
+            if (acc.id === "calendar") {
+                accessCheck = true;
+            }
+        })
+        if (!accessCheck) {
+            return
+        }
+
+        console.log("past")
+        // console.log("helo")
+      //  console.log(email);
+
         const form = [
             {name: "Event", id: "text", type:"text"},
             {name: "Description", id: "description", type:"textarea"},
@@ -308,7 +330,6 @@ export const DayPilotMonthWithData = (props: MonthFieldProps) => {
     } */
 
     const onEventClick  = async (args:any) => {
-        console.log('hee')
         const form = [
             {name: "Event", id: "text", disabled: true},
             {name: "Start", id: "start", dateFormat: "MM/dd/yyyy", type: "datetime", disabled: true},
