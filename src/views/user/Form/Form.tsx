@@ -116,6 +116,7 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
             email: '',
             access: [],
             description: '',
+
         },
         accessList = [{label: '', value: ''}],
         onFormSubmit,
@@ -131,6 +132,7 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                 innerRef={ref}
                 initialValues={{
                     ...initialData,
+
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
@@ -159,39 +161,18 @@ const UserForm = forwardRef<FormikRef, Form>((props, ref) => {
                                 <div className="lg:col-span-2">
                                     <BasicInformationFields
                                         touched={touched}
-                                        errors={errors} 
+                                        errors={errors}
+                                        type={type}
                                     />                               
                                     <OrganizationFields
                                         touched={touched}
                                         errors={errors} 
                                         values={values}
                                         accessList={accessList}
+                                        type={type}
                                     />            
                                 </div>
                             </div>
-                            <StickyFooter
-                                className="-mx-8 px-8 flex items-center justify-between py-4"
-                                stickyClass="border-t bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                            >
-                                <div>
-                                    {type === 'edit' && (
-                                        <DeleteProductButton
-                                            onDelete={onDelete as OnDelete}
-                                        />
-                                    )}
-                                </div>
-                                <div className="md:flex items-center">
-                                    <Button
-                                        size="sm"
-                                        variant="solid"
-                                        loading={isSubmitting}
-                                        icon={<AiOutlineSave />}
-                                        type="submit"
-                                    >
-                                        Save
-                                    </Button>
-                                </div>
-                            </StickyFooter>
                         </FormContainer>
                     </Form>
                 )}

@@ -2,9 +2,10 @@ import AdaptableCard from '@/components/shared/AdaptableCard'
 import RichTextEditor from '@/components/shared/RichTextEditor'
 import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
-import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
+import {Field, FormikErrors, FormikTouched, FieldProps, FormikValues} from 'formik'
 import CreatableSelect from 'react-select/creatable'
 import Select from '@/components/ui/Select'
+import {string} from "yup";
 
 type Options = {
     label: string
@@ -25,6 +26,7 @@ type FormFieldsName = {
 type BasicInformationFields = {
     touched: FormikTouched<FormFieldsName>
     errors: FormikErrors<FormFieldsName>
+    type: string
 }
 
 const tags = [
@@ -34,10 +36,13 @@ const tags = [
 
 
 const BasicInformationFields = (props: BasicInformationFields) => {
-    const { touched, errors } = props
-   // const { values = { tags: [] }, touched, errors } = props
-    
+    const { touched, errors, type } = props
+    //const { values = { tags: [] }, touched, errors } = props
+    let disabledcheck = false;
 
+    if (type === "view") {
+        disabledcheck = true
+    }
     return (
         <AdaptableCard divider className="mb-4">
             <h5>Basic Information</h5>
@@ -57,14 +62,6 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                 />
             </FormItem>
 
-                <Field
-                    type="hidden"
-                    autoComplete="off"
-                    name="id"
-                    placeholder="id"
-                    component={Input}
-                />
-
             <FormItem
                 label="First Name"
                 invalid={(errors.firstName && touched.firstName) as boolean}
@@ -76,6 +73,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     name="firstName"
                     placeholder="First Name"
                     component={Input}
+                    disabled={disabledcheck}
                 />
             </FormItem>
             <FormItem
@@ -89,6 +87,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     name="lastName"
                     placeholder="Last Name"
                     component={Input}
+                    disabled={disabledcheck}
                 />
             </FormItem>
 
@@ -104,6 +103,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     name="email"
                     placeholder="Email"
                     component={Input}
+                    disabled={disabledcheck}
                 />
             </FormItem>
             <FormItem
@@ -118,6 +118,7 @@ const BasicInformationFields = (props: BasicInformationFields) => {
                     name="new_password"
                     placeholder="Password"
                     component={Input}
+                    disabled={disabledcheck}
                 />
             </FormItem>
         </AdaptableCard>

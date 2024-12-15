@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import {HiOutlineEye, HiOutlinePencil, HiOutlineTrash} from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
     getUsers,
@@ -73,9 +73,24 @@ const inventoryStatusColor: Record<
 
 
 const ActionColumn = ({ row }: { row: Gallery }) => {
+
+
+    const { avatar, userName, authority, email, access, id } = useAppSelector(
+        (state) => state.auth.user
+    )
+
+    console.log("access")
+    console.log(access)
+    console.log("id")
+    console.log(id);
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
+
+    const onView = () => {
+        navigate(`/user/view/${row.id}`)
+    }
+
 
     const onEdit = () => {
         navigate(`/user/edit/${row.id}`)
@@ -85,23 +100,54 @@ const ActionColumn = ({ row }: { row: Gallery }) => {
         dispatch(toggleDeleteConfirmation(true))
         dispatch(setSelectedProduct(row.id))
     }
+    let accessCheck = false;
 
-    return (
-        <div className="flex justify-end text-lg">
+    if (access === undefined) {
+        accessCheck = false;
+    }
+
+    access.map((acce) => {
+        if (acce.id === "accss") {
+            accessCheck = true
+        }
+    })
+    console.log(row);
+    if (accessCheck || (row.id === id)) {
+        return (
+            <div className="flex justify-end text-lg">
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
                 <HiOutlinePencil />
             </span>
-            <span
-                className="cursor-pointer p-2 hover:text-red-500"
-                onClick={onDelete}
-            >
+                <span
+                    className="cursor-pointer p-2 hover:text-red-500"
+                    onClick={onDelete}
+                >
                 <HiOutlineTrash />
             </span>
-        </div>
-    )
+            </div>
+        )
+
+    } else {
+        return (
+            <div className="flex justify-end text-lg">
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onView}
+            >
+                <HiOutlineEye/>
+            </span>
+                <span
+                    className="cursor-pointer p-2 hover:text-red-500"
+                    onClick={onDelete}
+                >
+                <HiOutlineTrash/>
+            </span>
+            </div>
+        )
+    }
 }
 
 const ProductColumn = ({ row }: { row: Product }) => {

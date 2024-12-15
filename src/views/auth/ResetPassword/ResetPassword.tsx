@@ -1,6 +1,6 @@
 import reducer, {getAuthentication, useAppDispatch, useAppSelector} from "@/views/auth/ResetPassword/store";
 import {useEffect} from "react";
-//import reducer, {getAccessList, useAppSelector} from "@/views/user/Edit/store";
+//import reducer, {getAccessList, useAppSelector} from "@/views/user/View/store";
 import {injectReducer, setUser, signInSuccess} from "@/store";
 import {redirect, useNavigate} from "react-router-dom";
 import appConfig from "@/configs/app.config";

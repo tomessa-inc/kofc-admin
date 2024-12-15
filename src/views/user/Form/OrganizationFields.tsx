@@ -28,7 +28,8 @@ type OrganizationFieldsProps = {
     values: {
         tags: Options
         [key: string]: unknown
-    }
+    },
+    type: string
 }
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
