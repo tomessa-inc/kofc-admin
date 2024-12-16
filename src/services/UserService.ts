@@ -23,7 +23,7 @@ export async function apiGetUsers<T, U extends Record<string, unknown>>(
 ) {
 
     const params = await formatParams(data);
-
+    console.log(`${URL}/page-index/${data['pageIndex']}/page-size/${params.join('/')}`);
     return ApiService.fetchData<T>({
         url: `${URL}/page-index/${data['pageIndex']}/page-size/${params.join('/')}`,
         method: 'post', data,
