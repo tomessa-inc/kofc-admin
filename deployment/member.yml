@@ -9,6 +9,8 @@ phases:
     commands:
       - aws s3 sync s3://kofc9544-config/ .
       - cp src/configs/production/app.config.ts src/configs
+      - echo "configs"
+      - cat src/configs/app.config.ts
       - npm --version
       - cat src/configs/app.config.ts
     #  - npm install --save @angular/material @angular/cdk
