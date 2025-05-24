@@ -75,8 +75,11 @@ const inventoryStatusColor: Record<
 const TagColumn =  ({ row }: { row: Gallery }) => {
     let tagArray: string[] = []
     row.Tags.map((tag) => {
+        console.log(tag);
         tagArray.push(tag.name);
     });
+
+    console.log(tagArray)
     /*   for (let x=0;x<=row.Tags.length;x++) {
         const tag: Tag = row.Tags[x]
 
