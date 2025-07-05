@@ -1,4 +1,4 @@
-import toast from '@/components/ui/toast'
+/*import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
@@ -67,3 +67,4 @@ const ProductDeleteConfirmation = () => {
 }
 
 export default ProductDeleteConfirmation
+*/
