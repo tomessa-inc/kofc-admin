@@ -150,7 +150,7 @@ export async function apiGetGallleryById<T, U extends Record<string, unknown>>(
     console.log(`${URL}/id/${params['id']}`);
     return ApiService.fetchData<T>({
         url: `${URL}/id/${params['id']}`,
-        method: 'get',
+        method: 'post',
         params,
     })
 }
@@ -169,9 +169,11 @@ export async function apiGetImageById<T, U extends Record<string, unknown>>(
 export async function apiPutGallery<T, U extends Record<string, unknown>>(
     data: U
 ) {
+
+    console.log(data);
    return ApiService.fetchData<T>({
         url: `${URL}/id/${data['id']}`,
-        method: 'put',
+        method: 'patch',
         data,
     }) 
 }

@@ -20,7 +20,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
 
     const { signOut } = useAuth()
 
-    const { avatar, userName, authority, email } = useAppSelector(
+    const { avatar, firstName, authority, email } = useAppSelector(
         (state) => state.auth.user
     )
 
@@ -28,7 +28,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">{userName}</div>
+                <div className="text-xs capitalize">{firstName}</div>
             </div>
         </div>
     )
@@ -45,7 +45,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                {userName}
+                                {firstName}
                             </div>
                             <div className="text-xs">{email}</div>
                         </div>

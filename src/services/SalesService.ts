@@ -108,6 +108,8 @@ export async function apiPutGallery<T, U extends Record<string, unknown>>(
 export async function apiPutImage<T, U extends Record<string, unknown>>(
     data: U
 ) {
+    console.log(`${URL}/image/id/${data['id']}`)
+    console.log(data);
     return ApiService.fetchData<T>({
         url: `${URL}/image/id/${data['id']}`,
         method: 'put',

@@ -116,6 +116,32 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/access/New')),
         authority: [],
     },
+    {
+        key: 'golf',
+        path: '/golf',
+        component: lazy(() => import('@/views/golf/List/List')),
+        authority: [],
+    },
+    {
+        key: 'golfTeamList',
+        path: '/golf/team',
+        component: lazy(() => import('@/views/golf/team/List')),
+        authority: [],
+    },
+    {
+        key: 'golfTeamList',
+        path: '/golf/team/:teamId',
+        component: lazy(() => import('@/views/golf/team/playerByTeamId')),
+        authority: [],
+    },
+
+    {
+        key: 'golfTeamList',
+        path: '/golf/player',
+        component: lazy(() => import('@/views/golf/player/List')),
+        authority: [],
+    },
+
 
     /** Example purpose only, please remove */
     {

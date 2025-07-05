@@ -40,12 +40,13 @@ function useAuth() {
                 dispatch(signInSuccess(token))
 
                 if (resp.data.user) {
-
+                    console.log("here is the user")
+                      console.log(resp.data.user[0])
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            resp.data.user[0] || {
                                 avatar: '',
-                                userName: 'Anonymous',
+                                firstName: 'Anonymous',
                                 authority: ['USER'],
                                 email: '',
                             }

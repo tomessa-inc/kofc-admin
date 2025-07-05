@@ -37,7 +37,8 @@ type OrganizationFieldsProps = {
 }
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
-    const { values = { category: '', tags: [], viewing: {}}, touched, errors, tagList } = props
+    const { values = { category: '', Tags: [], viewing:false}, touched, errors, tagList } = props
+
 
     const viewList =  [{
         label: "public",
@@ -48,14 +49,21 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
     }]
 
     let viewValue = {};
+    console.log("the values")
+    console.log(values.viewing)
     switch(values.viewing) {
-        case true:
+        case 1:
+            console.log("first")
             viewValue = {label:"public", value:true}
             break;
-        case false:
+        case 0:
+            console.log("second")
+
             viewValue = {label:"private", value:false}
             break;
     }
+    console.log("view")
+    console.log(viewValue)
 
     return (
         <AdaptableCard divider isLastChild className="mb-4">
@@ -78,7 +86,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                     field={field}
                                     form={form}
                                     options={tagList}
-                                    value={values.tags}
+                                    value={values.Tags}
                                     onChange={(option) => {
                                         console.log('option');
                                         console.log(option)

@@ -94,6 +94,8 @@ const ImageEdit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
+    console.log("iamgeData")
+    console.log(imageData)
     return (
         <>
             <Loading loading={loading}>

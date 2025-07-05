@@ -5,7 +5,7 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getGalleries,
+    getTeams,
     setTableData,
     setSelectedProduct,
     toggleDeleteConfirmation,
@@ -37,15 +37,12 @@ type Gallery = {
     id: string
     name: string
     img: string
-    description: string
-    viewing:boolean
-    Tags: Tag[]
+    description: string;
     createdAt: string
     updatedAt: string
+    count: number
 }
-type Tag = {
-    name: string
-}
+
 
 const inventoryStatusColor: Record<
     number,
@@ -72,31 +69,6 @@ const inventoryStatusColor: Record<
     },
 }
 
-const TagColumn =  ({ row }: { row: Gallery }) => {
-    let tagArray: string[] = []
-
-    if (row.Tags === null) {
-        return;
-    }
-    if (row.Tags.length) {
-        row.Tags.map((tag) => {
-            tagArray.push(tag.name);
-        });
-    }
-
-    /*   for (let x=0;x<=row.Tags.length;x++) {
-        const tag: Tag = row.Tags[x]
-
-        tagArray.push(tag.name)
-        //    console.log(tagArray)
-    }*/
-        //console.log(tagArray)
-    //  console.log(tagArray.join(',')) */
-    return (
-        <span className="capitalize">{tagArray}</span>
-    )
-}
-
 
 const ActionColumn = ({ row }: { row: Gallery }) => {
     const dispatch = useAppDispatch()
@@ -104,7 +76,7 @@ const ActionColumn = ({ row }: { row: Gallery }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/gallery/edit/${row.id}`)
+        navigate(`@/views/tag/edit/${row.id}`)
     }
 
     const onDelete = () => {
@@ -164,19 +136,19 @@ const ProductTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.galleryList.data.tableData
+        (state) => state.golfTeamList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.galleryList.data.filterData
+        (state) => state.golfTeamList.data.filterData
     )
 
     const loading = useAppSelector(
-        (state) => state.galleryList.data.loading
+        (state) => state.golfTeamList.data.loading
     )
 
     const data = useAppSelector(
-        (state) => state.galleryList.data.galleryList
+        (state) => state.golfTeamList.data.tableData
     )
 
     useEffect(() => {
@@ -196,21 +168,11 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getGalleries({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getTeams({ pageIndex, pageSize, sort, query, filterData }))
     }
-    
 
     const columns: ColumnDef<Gallery>[] = useMemo(
         () => [
-            {
-                header: 'ID',
-                accessorKey: 'id',
-                cell: (props) => {
-                    const row = props.row.original
-                    const link = '/image/';
-                    return <a href={link + row.id}>{row.id}</a>
-                },
-            },
             {
                 header: 'Name',
                 accessorKey: 'name',
@@ -220,31 +182,11 @@ const ProductTable = () => {
                 },
             },
             {
-                header: 'Description',
-                accessorKey: 'description',
+                header: 'Players in Team',
+                accessorKey: 'count',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.description}</span>
-                },
-            },
-            {
-                header: 'Tag',
-                accessorKey: 'tag',
-                cell: (props) => <TagColumn row={props.row.original} />,
-            },
-            {
-                header: 'Public',
-                accessorKey: 'public',
-                cell: (props) => {
-                    const row = props.row.original
-                    let view;
-                    if (row.viewing) {
-                        view = "true"
-                    } else {
-                        view = "false";
-                    }
-
-                    return <span className="capitalize">{view}</span>
+                    return <span className="capitalize">{row.count}</span>
                 },
             },
             {

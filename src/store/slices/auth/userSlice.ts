@@ -5,6 +5,8 @@ export type UserState = {
     avatar?: string
     name?: string
     userName?: string
+    firstName?:string
+    lastName?:string
     email?: string
     authority?: string[]
     access?: AccessState[]
@@ -19,6 +21,8 @@ export type AccessState = {
 const initialState: UserState = {
     avatar: '',
     userName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     authority: [],
     access: [],
@@ -33,6 +37,8 @@ const userSlice = createSlice({
             state.avatar = action.payload?.avatar
             state.email = action.payload?.email
             state.userName = action.payload?.userName
+            state.firstName = action.payload?.firstName
+            state.lastName = action.payload?.lastName
             state.authority = action.payload?.authority
             state.access = action.payload?.access
             state.id = action.payload?.id

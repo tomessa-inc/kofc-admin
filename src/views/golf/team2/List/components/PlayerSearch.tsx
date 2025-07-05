@@ -5,7 +5,7 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getGalleries,
+    getPlayers,
     setTableData,
     setSelectedProduct,
     toggleDeleteConfirmation,
@@ -37,15 +37,11 @@ type Gallery = {
     id: string
     name: string
     img: string
-    description: string
-    viewing:boolean
-    Tags: Tag[]
+    description: string;
     createdAt: string
     updatedAt: string
 }
-type Tag = {
-    name: string
-}
+
 
 const inventoryStatusColor: Record<
     number,
@@ -72,31 +68,6 @@ const inventoryStatusColor: Record<
     },
 }
 
-const TagColumn =  ({ row }: { row: Gallery }) => {
-    let tagArray: string[] = []
-
-    if (row.Tags === null) {
-        return;
-    }
-    if (row.Tags.length) {
-        row.Tags.map((tag) => {
-            tagArray.push(tag.name);
-        });
-    }
-
-    /*   for (let x=0;x<=row.Tags.length;x++) {
-        const tag: Tag = row.Tags[x]
-
-        tagArray.push(tag.name)
-        //    console.log(tagArray)
-    }*/
-        //console.log(tagArray)
-    //  console.log(tagArray.join(',')) */
-    return (
-        <span className="capitalize">{tagArray}</span>
-    )
-}
-
 
 const ActionColumn = ({ row }: { row: Gallery }) => {
     const dispatch = useAppDispatch()
@@ -104,7 +75,7 @@ const ActionColumn = ({ row }: { row: Gallery }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/gallery/edit/${row.id}`)
+        navigate(`@/views/tag/edit/${row.id}`)
     }
 
     const onDelete = () => {
@@ -158,25 +129,25 @@ const GalleryColumn = ({ row }: { row: Gallery }) => {
     )
 }
 
-const ProductTable = () => {
+const PlayerSearch = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.galleryList.data.tableData
+        (state) => state.golfList.data.tableData
     )
 
     const filterData = useAppSelector(
-        (state) => state.galleryList.data.filterData
+        (state) => state.golfList.data.filterData
     )
 
     const loading = useAppSelector(
-        (state) => state.galleryList.data.loading
+        (state) => state.golfList.data.loading
     )
 
     const data = useAppSelector(
-        (state) => state.galleryList.data.galleryList
+        (state) => state.golfList.data.playerList
     )
 
     useEffect(() => {
@@ -196,55 +167,17 @@ const ProductTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getGalleries({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getPlayers({ pageIndex, pageSize, sort, query, filterData }))
     }
-    
 
     const columns: ColumnDef<Gallery>[] = useMemo(
         () => [
-            {
-                header: 'ID',
-                accessorKey: 'id',
-                cell: (props) => {
-                    const row = props.row.original
-                    const link = '/image/';
-                    return <a href={link + row.id}>{row.id}</a>
-                },
-            },
             {
                 header: 'Name',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
                     return <GalleryColumn row={row} />
-                },
-            },
-            {
-                header: 'Description',
-                accessorKey: 'description',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.description}</span>
-                },
-            },
-            {
-                header: 'Tag',
-                accessorKey: 'tag',
-                cell: (props) => <TagColumn row={props.row.original} />,
-            },
-            {
-                header: 'Public',
-                accessorKey: 'public',
-                cell: (props) => {
-                    const row = props.row.original
-                    let view;
-                    if (row.viewing) {
-                        view = "true"
-                    } else {
-                        view = "false";
-                    }
-
-                    return <span className="capitalize">{view}</span>
                 },
             },
             {
@@ -298,4 +231,4 @@ const ProductTable = () => {
     )
 }
 
-export default ProductTable
+export default PlayerSearch

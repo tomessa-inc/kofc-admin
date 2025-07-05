@@ -61,6 +61,7 @@ const Edit = () => {
         setSubmitting: SetSubmitting
     ) => {
         setSubmitting(true)
+        console.log("update now")
         const success = await updateGallery(values)
         setSubmitting(false)
         if (success) {
@@ -113,6 +114,8 @@ const Edit = () => {
 
     console.log('gallery')
     console.log(galleryData);
+    console.log("tqg list")
+console.log(tagList)
 
     return (
         <>
