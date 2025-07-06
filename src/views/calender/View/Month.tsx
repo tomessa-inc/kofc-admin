@@ -48,11 +48,9 @@ export const Month = () => {
            if (the.viewing) {
                barColor = '#6aa84f';
            }
-           console.log("the the")
-            console.log(the);
             const jsonObject = {
                 id: the.id,
-                text: the.Event[0].text,
+                text: the.Event.text,
                 start: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourStart),
                 end: DayPilot.Date.fromYearMonthDay(the.year, the.month, the.day).addHours(the.hourEnd),
                 description: the.Event.description,
