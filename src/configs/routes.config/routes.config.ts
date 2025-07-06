@@ -117,12 +117,6 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'golf',
-        path: '/golf',
-        component: lazy(() => import('@/views/golf/List/List')),
-        authority: [],
-    },
-    {
         key: 'golfTeamList',
         path: '/golf/team',
         component: lazy(() => import('@/views/golf/team/List')),
