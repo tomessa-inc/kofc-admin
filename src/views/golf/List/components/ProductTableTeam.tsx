@@ -5,13 +5,13 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getTeams,
     setTableData,
     setSelectedProduct,
     toggleDeleteConfirmation,
     useAppDispatch,
     useAppSelector,
 } from '../store'
+import {getTeams} from "@/views/golf/team/List/store";
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import ProductDeleteConfirmation from './ProductDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
