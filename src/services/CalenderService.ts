@@ -71,7 +71,9 @@ export async function  apiGetEvents<T, U extends Record<string, unknown>>(
 export async function  apiGetEventMonthByDay<T, U extends Record<string, unknown>>(
     data: U
 ) {
-
+    console.log("month")
+    console.log(data)
+    console.log(`${URL}/month`)
     const retval =  ApiService.fetchData<T>({
         url: `${URL}/month`,
         method: 'post',
