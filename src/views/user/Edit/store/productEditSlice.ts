@@ -117,7 +117,6 @@ export const getUserById = createAsyncThunk(
 
         response.data.access = access;
 
-      //  console.log(response.data)
         return response.data
     }
 )

@@ -34,7 +34,7 @@ const ResetPassword = () => {
 
     console.log("getAuthentication data")
 
-    console.log(getAuthenticationData.data);
+    console.log(getAuthenticationData);
 
     if (getAuthenticationData.data) {
         const token = getAuthenticationData.token
