@@ -100,24 +100,31 @@ type GetTagsRequest = TableQueries & { filterData?: FilterQueries }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
 
-export const SLICE_NAME = 'UserEdit'
+export const SLICE_NAME = 'UserView'
 
 export const getUserById = createAsyncThunk(
-    SLICE_NAME + '/users/edit',
+    SLICE_NAME + '/users/view',
     async (data: { id: string }) => {
         const response = await apiGetUserById<
             GetSalesProductResponse,
             { id: string }
         >(data)
+        console.log("here")
+        console.log(response.data)
 
-        const access = response.data.access.map((tag) => {
+        let access = []
 
-            return {"label":tag.name, "value":tag.id}
-        })
+      if (response.data.access !== null) {
+          access = response.data.access.map((tag) => {
 
-        response.data.access = access;
+              return {"label": tag.name, "value": tag.id}
+          })
+      }
 
-      //  console.log(response.data)
+      response.data.access = access;
+
+        console.log("in the view")
+        console.log(response.data)
         return response.data
     }
 )

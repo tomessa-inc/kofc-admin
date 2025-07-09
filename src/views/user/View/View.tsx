@@ -22,30 +22,31 @@ import UserForm, {
 
 import isEmpty from 'lodash/isEmpty'
 
-injectReducer('UserEdit', reducer)
+injectReducer('UserView', reducer)
 
 const View = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.UserEdit.data.tableData
+        (state) => state.UserView.data.tableData
     )
 
     const location = useLocation()
     const navigate = useNavigate()
 
     const userData = useAppSelector(
-        (state) => state.UserEdit.data.userData
+        (state) => state.UserView.data.userData
     )
 
     const accessList = useAppSelector(
-        (state) => state.UserEdit.data.accessList
+        (state) => state.UserView.data.accessList
     )
     const loading = useAppSelector(
-        (state) => state.UserEdit.data.loading
+        (state) => state.UserView.data.loading
     )
 
     const fetchData = (data: { id: string }) => {
+        console.log("fetch data")
         dispatch(getUserById(data))
     }
 

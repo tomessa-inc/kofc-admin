@@ -56,8 +56,8 @@ export async function apiResetPassword(data: ResetThePassword) {
 export async function apiGetUserById<T, U extends Record<string, unknown>>(
     params: U
 ) {
-//    console.log(`${URL}/id/${params['id']}`);
-  //  console.log(params)
+    console.log(`${URL}/id/${params['id']}`);
+    console.log(params)
     return ApiService.fetchData<T>({
         url: `${URL}/id/${params['id']}`,
         method: 'post',

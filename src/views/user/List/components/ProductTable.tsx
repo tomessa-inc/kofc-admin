@@ -227,8 +227,7 @@ const ProductTable = () => {
                 accessorKey: 'id',
                 cell: (props) => {
                     const row = props.row.original
-                    const link = '/image/';
-                    return <a href={link + row.id}>{row.id}</a>
+                    return <span className="capitalize">{row.id}</span>
                 },
             },
             {
